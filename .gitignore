@@ -1,0 +1,24 @@
+# Local Claude export folder already imported into docs/
+\# Free-task planlama tasarımı/
+
+# Secrets and local environment
+.env
+.env.*
+!.env.example
+
+# Flutter / Dart
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+.packages
+build/
+coverage/
+
+# IDE / OS
+.DS_Store
+.idea/
+.vscode/
+
+# Generated local diagnostics
+diagnostics/
+*.log

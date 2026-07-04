@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  body { margin:0; background:#EDEAE3; display:flex; align-items:center; justify-content:center; min-height:100vh; font-family:'Hanken Grotesk',sans-serif; }
+  * { box-sizing:border-box; -webkit-font-smoothing:antialiased; }
+  .frame { width:390px; height:844px; border-radius:44px; background:#FAF9F6; position:relative; overflow:hidden; box-shadow:0 30px 70px -20px rgba(38,35,31,.4), 0 0 0 10px #26231F, 0 0 0 11px #3a352f; }
+  .scroll { position:absolute; top:0; left:0; right:0; bottom:0; overflow-y:auto; }
+  .scroll::-webkit-scrollbar{ display:none; }
+  button { font-family:inherit; cursor:pointer; }
+  @keyframes fade { from{ opacity:0;} to{ opacity:1;} }
+  @keyframes sheetUp { from{ transform:translateY(100%);} to{ transform:translateY(0);} }
+  @keyframes spin { to{ transform:rotate(360deg);} }
+  @keyframes popIn { from{ opacity:0; transform:translateY(8px) scale(.98);} to{ opacity:1; transform:translateY(0) scale(1);} }
+</style>
+</helmet>
+
+<div class="frame">
+  <div class="scroll">
+    <!-- status bar -->
+    <div style="display:flex;justify-content:space-between;align-items:center;padding:14px 26px 0;font:600 14px 'Hanken Grotesk';color:#26231F;">
+      <span>9:41</span>
+      <span style="display:inline-flex;gap:5px;align-items:center;font:500 11px 'IBM Plex Mono';color:{{ chipCol }};">{{ chipText }}</span>
+    </div>
+
+    <div style="display:flex;align-items:center;justify-content:space-between;padding:16px 20px 0;">
+      <span style="font:600 16px 'Hanken Grotesk';color:#26231F;">Senkronizasyon</span>
+      <span style="width:36px;"></span>
+    </div>
+
+    <div style="padding:16px 20px 40px;">
+      <!-- big status card -->
+      <div style="border-radius:16px;padding:22px;text-align:center;margin-bottom:16px;background:{{ statusBg }};transition:background .3s;">
+        <div style="width:52px;height:52px;border-radius:15px;margin:0 auto 12px;display:flex;align-items:center;justify-content:center;background:{{ statusIconBg }};">
+          <span style="display:{{ spinShow }};width:24px;height:24px;border:3px solid rgba(255,255,255,.4);border-top-color:#fff;border-radius:50%;animation:spin .8s linear infinite;"></span>
+          <span style="display:{{ okShow }};"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 0 1-9 9M3 12a9 9 0 0 1 9-9"/><path d="M21 5v4h-4M3 19v-4h4"/></svg></span>
+          <span style="display:{{ offShow }};"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"><path d="M4 4l16 16M12 3a9 9 0 0 1 8 5M4 9a9 9 0 0 0 1 9"/></svg></span>
+        </div>
+        <div style="font:700 17px 'Hanken Grotesk';color:{{ statusTitleCol }};">{{ statusTitle }}</div>
+        <div style="font:500 12px 'IBM Plex Mono';color:{{ statusSubCol }};margin-top:5px;">{{ statusSub }}</div>
+      </div>
+
+      <!-- controls -->
+      <div style="display:flex;gap:8px;margin-bottom:16px;">
+        <button onClick="{{ syncNow }}" style="flex:1;height:46px;border:none;border-radius:12px;background:#2C7D6D;color:#fff;font:600 14px 'Hanken Grotesk';display:flex;align-items:center;justify-content:center;gap:7px;">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 0 1-9 9M3 12a9 9 0 0 1 9-9"/><path d="M21 5v4h-4M3 19v-4h4"/></svg>Şimdi senkronla
+        </button>
+        <button onClick="{{ toggleOffline }}" style="width:46px;height:46px;border:1px solid #E6E2DA;border-radius:12px;background:#fff;display:flex;align-items:center;justify-content:center;" title="Çevrimdışı simüle et">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="{{ offlineBtnCol }}" stroke-width="2" stroke-linecap="round"><path d="M4 4l16 16M12 3a9 9 0 0 1 8 5M4 9a9 9 0 0 0 1 9"/></svg>
+        </button>
+      </div>
+
+      <!-- security note -->
+      <div style="display:flex;gap:10px;background:#fff;border:1px solid #E6E2DA;border-radius:12px;padding:13px;margin-bottom:18px;">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#2C7D6D" stroke-width="2" style="flex:0 0 auto;margin-top:1px;"><path d="M12 3l7 3v5c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6z" stroke-linejoin="round"/></svg>
+        <span style="font:400 12.5px/1.45 'Hanken Grotesk';color:#4A453E;">Uçtan uca şifreli. Sunucu görev içeriğini göremez — yalnızca şifreli bloklar taşınır.</span>
+      </div>
+
+      <!-- devices -->
+      <div style="display:flex;align-items:center;justify-content:space-between;margin:0 4px 10px;">
+        <span style="font:600 12px 'IBM Plex Mono';color:#A79F94;letter-spacing:.06em;">CİHAZLAR · {{ deviceCount }}</span>
+      </div>
+      <div style="background:#fff;border:1px solid #E6E2DA;border-radius:14px;overflow:hidden;">
+        <sc-for list="{{ devices }}" as="d" hint-placeholder-count="2">
+          <div style="display:flex;align-items:center;gap:12px;padding:13px 14px;border-bottom:1px solid #F1EFEA;animation:popIn .2s ease;">
+            <div style="width:34px;height:34px;border-radius:10px;background:#F1EFEA;display:flex;align-items:center;justify-content:center;flex:0 0 auto;">
+              <span style="display:{{ d.phoneShow }};"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#26231F" stroke-width="2"><rect x="7" y="3" width="10" height="18" rx="2.5"/><path d="M11 18h2" stroke-linecap="round"/></svg></span>
+              <span style="display:{{ d.laptopShow }};"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#26231F" stroke-width="2"><rect x="3" y="5" width="18" height="12" rx="2"/><path d="M8 21h8" stroke-linecap="round"/></svg></span>
+            </div>
+            <div style="flex:1;min-width:0;"><div style="font:600 14px 'Hanken Grotesk';color:#26231F;">{{ d.name }}</div><div style="font:500 11px 'IBM Plex Mono';color:#8A837A;">{{ d.status }}</div></div>
+            <i style="width:8px;height:8px;border-radius:50%;background:{{ d.dot }};flex:0 0 auto;"></i>
+          </div>
+        </sc-for>
+        <!-- add device row -->
+        <button onClick="{{ openPair }}" style="width:100%;display:flex;align-items:center;gap:12px;padding:13px 14px;background:none;border:none;">
+          <div style="width:34px;height:34px;border-radius:10px;background:#E4F1ED;display:flex;align-items:center;justify-content:center;flex:0 0 auto;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#2C7D6D" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></div>
+          <span style="font:600 14px 'Hanken Grotesk';color:#2C7D6D;">Yeni cihaz ekle</span>
+        </button>
+      </div>
+
+      <!-- conflict entry -->
+      <sc-if value="{{ hasConflict }}" hint-placeholder-val="{{ true }}">
+        <div onClick="{{ openConflict }}" style="display:flex;align-items:center;gap:10px;background:#F6ECD9;border-radius:12px;padding:12px 14px;margin-top:14px;cursor:pointer;animation:fade .2s ease;">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#B7791F" stroke-width="2" style="flex:0 0 auto;"><path d="M12 8v5M12 16.5v.5" stroke-linecap="round"/><path d="M12 4l9 15H3z" stroke-linejoin="round"/></svg>
+          <span style="flex:1;font:500 12.5px 'Hanken Grotesk';color:#8A5D14;">1 çakışma çözüm bekliyor</span>
+          <span style="font:600 12px 'Hanken Grotesk';color:#B7791F;">Çöz ›</span>
+        </div>
+      </sc-if>
+
+      <div style="font:500 12px 'Hanken Grotesk';color:#A79F94;text-align:center;margin-top:20px;padding:13px;border:1px dashed #DCD7CD;border-radius:12px;">Bu tıklanır bir prototip — senkronla, çevrimdışı simüle et, cihaz ekle, çakışma çöz.</div>
+    </div>
+  </div>
+
+  <!-- ===== PAIR SHEET ===== -->
+  <sc-if value="{{ pairOpen }}" hint-placeholder-val="{{ false }}">
+    <div onClick="{{ closePair }}" style="position:absolute;inset:0;background:rgba(27,24,21,.42);animation:fade .18s ease;"></div>
+    <div style="position:absolute;left:0;right:0;bottom:0;background:#FAF9F6;border-radius:26px 26px 0 0;padding:12px 22px 28px;box-shadow:0 -12px 40px -12px rgba(0,0,0,.3);animation:sheetUp .24s cubic-bezier(.2,.8,.2,1);">
+      <div style="width:38px;height:5px;border-radius:3px;background:#D8D3C9;margin:2px auto 16px;"></div>
+      <!-- step: show code -->
+      <sc-if value="{{ pairStepCode }}" hint-placeholder-val="{{ true }}">
+        <h3 style="font:700 20px 'Hanken Grotesk';margin:0 0 6px;color:#26231F;">Yeni cihaz ekle</h3>
+        <p style="font:400 13.5px/1.5 'Hanken Grotesk';color:#6A645C;margin:0 0 20px;">Yeni cihazda bu QR'ı okut ya da kodu gir. Anahtarlar doğrudan, şifreli aktarılır.</p>
+        <div style="width:170px;height:170px;margin:0 auto 18px;background:#fff;border:1px solid #E6E2DA;border-radius:18px;padding:15px;">
+          <div style="width:100%;height:100%;background:conic-gradient(#26231F 25%, transparent 0) 0 0/20px 20px, conic-gradient(#26231F 25%, transparent 0) 10px 10px/20px 20px;background-color:#fff;border-radius:6px;position:relative;">
+            <div style="position:absolute;top:5px;left:5px;width:34px;height:34px;border:6px solid #26231F;border-radius:7px;background:#fff;"></div>
+            <div style="position:absolute;top:5px;right:5px;width:34px;height:34px;border:6px solid #26231F;border-radius:7px;background:#fff;"></div>
+            <div style="position:absolute;bottom:5px;left:5px;width:34px;height:34px;border:6px solid #26231F;border-radius:7px;background:#fff;"></div>
+            <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:30px;height:30px;background:#2C7D6D;border-radius:6px;"></div>
+          </div>
+        </div>
+        <div style="display:flex;align-items:center;justify-content:space-between;background:#fff;border:1px solid #E6E2DA;border-radius:12px;padding:14px;margin-bottom:14px;">
+          <span style="font:500 16px/1 'IBM Plex Mono';color:#26231F;letter-spacing:.16em;">FT4K · 9QX2 · 7M1P</span>
+          <span style="font:500 11px 'IBM Plex Mono';color:#8A837A;">2:00</span>
+        </div>
+        <button onClick="{{ simulateScan }}" style="width:100%;height:52px;border:none;border-radius:14px;background:#2C7D6D;color:#fff;font:700 16px 'Hanken Grotesk';">Diğer cihazda okutuldu (simüle et)</button>
+      </sc-if>
+      <!-- step: pairing -->
+      <sc-if value="{{ pairStepConnecting }}" hint-placeholder-val="{{ false }}">
+        <div style="display:flex;flex-direction:column;align-items:center;padding:40px 0 30px;">
+          <span style="width:44px;height:44px;border:4px solid #E4F1ED;border-top-color:#2C7D6D;border-radius:50%;animation:spin .8s linear infinite;margin-bottom:18px;"></span>
+          <div style="font:600 15px 'Hanken Grotesk';color:#26231F;">Anahtarlar aktarılıyor…</div>
+          <div style="font:400 12px 'Hanken Grotesk';color:#8A837A;margin-top:6px;">uçtan uca şifreli el sıkışma</div>
+        </div>
+      </sc-if>
+      <!-- step: done -->
+      <sc-if value="{{ pairStepDone }}" hint-placeholder-val="{{ false }}">
+        <div style="display:flex;flex-direction:column;align-items:center;padding:34px 0 20px;">
+          <div style="width:56px;height:56px;border-radius:50%;background:#2C7D6D;display:flex;align-items:center;justify-content:center;margin-bottom:16px;"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l4.5 4.5L19 7"/></svg></div>
+          <div style="font:700 18px 'Hanken Grotesk';color:#26231F;">iPad eklendi</div>
+          <div style="font:400 13px 'Hanken Grotesk';color:#8A837A;margin-top:6px;">Artık 3 cihaz senkron</div>
+          <button onClick="{{ closePair }}" style="width:100%;height:50px;border:none;border-radius:14px;background:#2C7D6D;color:#fff;font:700 15px 'Hanken Grotesk';margin-top:24px;">Bitti</button>
+        </div>
+      </sc-if>
+    </div>
+  </sc-if>
+
+  <!-- ===== CONFLICT SHEET ===== -->
+  <sc-if value="{{ conflictOpen }}" hint-placeholder-val="{{ false }}">
+    <div onClick="{{ closeConflict }}" style="position:absolute;inset:0;background:rgba(27,24,21,.42);animation:fade .18s ease;"></div>
+    <div style="position:absolute;left:0;right:0;bottom:0;background:#FAF9F6;border-radius:26px 26px 0 0;padding:12px 22px 26px;box-shadow:0 -12px 40px -12px rgba(0,0,0,.3);animation:sheetUp .24s cubic-bezier(.2,.8,.2,1);">
+      <div style="width:38px;height:5px;border-radius:3px;background:#D8D3C9;margin:2px auto 16px;"></div>
+      <div style="display:flex;align-items:center;gap:9px;margin-bottom:6px;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#B7791F" stroke-width="2" style="flex:0 0 auto;"><path d="M12 8v5M12 16.5v.5" stroke-linecap="round"/><path d="M12 4l9 15H3z" stroke-linejoin="round"/></svg><h3 style="font:700 20px 'Hanken Grotesk';margin:0;color:#26231F;">Çakışma çözümü</h3></div>
+      <p style="font:400 13.5px/1.5 'Hanken Grotesk';color:#6A645C;margin:0 0 18px;">Bu görev iki cihazda farklı düzenlendi. Hangi sürümü tutalım?</p>
+      <button data-v="a" onClick="{{ pickVersion }}" style="width:100%;text-align:left;background:#fff;border:{{ verABorder }};box-shadow:{{ verAShadow }};border-radius:14px;padding:14px;margin-bottom:10px;">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;"><span style="font:600 12px 'Hanken Grotesk';color:#1F5E50;">📱 iPhone · 09:42</span><i style="width:20px;height:20px;border-radius:50%;border:{{ verADot }};"></i></div>
+        <div style="font:600 15px 'Hanken Grotesk';color:#26231F;margin-bottom:6px;">Sprint planını gönder</div>
+        <div style="display:flex;gap:6px;"><span style="font:500 11px 'IBM Plex Mono';color:#6A645C;background:#F1EFEA;border-radius:6px;padding:3px 8px;">09:00–09:30</span><span style="font:600 11px 'Hanken Grotesk';color:#B4442F;background:#F6E3DD;border-radius:6px;padding:3px 8px;">Yüksek</span></div>
+      </button>
+      <button data-v="b" onClick="{{ pickVersion }}" style="width:100%;text-align:left;background:#fff;border:{{ verBBorder }};box-shadow:{{ verBShadow }};border-radius:14px;padding:14px;margin-bottom:14px;">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;"><span style="font:600 12px 'Hanken Grotesk';color:#6A645C;">💻 MacBook · 09:40</span><i style="width:20px;height:20px;border-radius:50%;border:{{ verBDot }};"></i></div>
+        <div style="font:600 15px 'Hanken Grotesk';color:#26231F;margin-bottom:6px;">Sprint planını ekibe gönder</div>
+        <div style="display:flex;gap:6px;"><span style="font:500 11px 'IBM Plex Mono';color:#6A645C;background:#F1EFEA;border-radius:6px;padding:3px 8px;">10:00–10:30</span><span style="font:600 11px 'Hanken Grotesk';color:#B7791F;background:#F6ECD9;border-radius:6px;padding:3px 8px;">Orta</span></div>
+      </button>
+      <div style="display:flex;gap:9px;">
+        <button onClick="{{ keepBoth }}" style="flex:1;height:50px;border:1px solid #E6E2DA;border-radius:13px;background:#fff;color:#26231F;font:600 14px 'Hanken Grotesk';">İkisini de tut</button>
+        <button onClick="{{ keepSelected }}" style="flex:1;height:50px;border:none;border-radius:13px;background:#2C7D6D;color:#fff;font:700 14px 'Hanken Grotesk';">Seçileni tut</button>
+      </div>
+    </div>
+  </sc-if>
+
+  <!-- TOAST -->
+  <sc-if value="{{ toastShow }}" hint-placeholder-val="{{ false }}">
+    <div style="position:absolute;left:20px;right:20px;bottom:26px;display:flex;align-items:center;gap:11px;background:#26231F;border-radius:12px;padding:12px 14px;animation:fade .2s ease;box-shadow:0 10px 30px -8px rgba(0,0,0,.4);">
+      <div style="width:22px;height:22px;border-radius:50%;background:#4FB39A;flex:0 0 auto;display:flex;align-items:center;justify-content:center;"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#08221B" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l4.5 4.5L19 7"/></svg></div>
+      <span style="font:500 13px 'Hanken Grotesk';color:#F4F2ED;flex:1;">{{ toastText }}</span>
+    </div>
+  </sc-if>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = {
+    status:'ok',           // ok | syncing | offline
+    lastSync:'2 dakika önce',
+    devices:[
+      { id:'d1', name:'iPhone 15 · bu cihaz', status:'şimdi aktif', kind:'phone', online:true },
+      { id:'d2', name:'MacBook Air', status:'2 dk önce', kind:'laptop', online:true },
+    ],
+    hasConflict:true,
+    conflictPick:'a',
+    pairOpen:false, pairStep:'code',   // code | connecting | done
+    conflictOpen:false,
+    toast:null,
+  };
+
+  flash(msg){ this.setState({ toast:msg }); clearTimeout(this._t); this._t=setTimeout(()=>this.setState({toast:null}),2400); }
+
+  renderVals(){
+    const s = this.state;
+    const isOff = s.status==='offline';
+    const isSync = s.status==='syncing';
+
+    const devices = s.devices.map(d=>({
+      id:d.id, name:d.name, status: isOff ? 'çevrimdışı' : d.status,
+      phoneShow: d.kind==='phone'?'inline-flex':'none',
+      laptopShow: d.kind==='laptop'?'inline-flex':'none',
+      dot: isOff ? '#B0A899' : (d.online ? '#2C7D6D' : '#B0A899'),
+    }));
+
+    return {
+      // top chip
+      chipText: isOff ? 'ÇEVRİMDIŞI' : (isSync ? 'SENKRONLANIYOR' : 'SENKRON'),
+      chipCol: isOff ? '#8A837A' : '#2C7D6D',
+
+      // status card
+      statusBg: isOff ? '#F1EFEA' : (isSync ? '#F6ECD9' : '#E4F1ED'),
+      statusIconBg: isOff ? '#9C958B' : (isSync ? '#B7791F' : '#2C7D6D'),
+      spinShow: isSync ? 'inline-block':'none',
+      okShow: s.status==='ok' ? 'inline-flex':'none',
+      offShow: isOff ? 'inline-flex':'none',
+      statusTitle: isOff ? 'Çevrimdışı' : (isSync ? 'Senkronlanıyor…' : 'Tüm cihazlarda güncel'),
+      statusTitleCol: isOff ? '#6A645C' : (isSync ? '#8A5D14' : '#1F5E50'),
+      statusSub: isOff ? 'Her şey çalışıyor · bağlanınca senkronlanır' : (isSync ? 'şifreli bloklar taşınıyor' : s.lastSync + ' senkronlandı'),
+      statusSubCol: isOff ? '#8A837A' : (isSync ? '#B7791F' : '#3C7C6D'),
+
+      offlineBtnCol: isOff ? '#B4442F' : '#6A645C',
+
+      syncNow: ()=>{ if(isSync) return;
+        this.setState({ status:'syncing' });
+        clearTimeout(this._s);
+        this._s=setTimeout(()=>{ this.setState({ status:'ok', lastSync:'az önce' }); this.flash('Senkronizasyon tamamlandı'); }, 1600);
+      },
+      toggleOffline: ()=>{
+        if(isOff){ this.setState({ status:'ok' }); this.flash('Yeniden çevrimiçi'); }
+        else { this.setState({ status:'offline' }); this.flash('Çevrimdışı — çekirdek işlevler açık'); }
+      },
+
+      devices,
+      deviceCount: s.devices.length,
+
+      // pair flow
+      pairOpen: s.pairOpen,
+      pairStepCode: s.pairOpen && s.pairStep==='code',
+      pairStepConnecting: s.pairOpen && s.pairStep==='connecting',
+      pairStepDone: s.pairOpen && s.pairStep==='done',
+      openPair: ()=> this.setState({ pairOpen:true, pairStep:'code' }),
+      closePair: ()=> this.setState({ pairOpen:false }),
+      simulateScan: ()=>{ this.setState({ pairStep:'connecting' });
+        clearTimeout(this._p);
+        this._p=setTimeout(()=>{
+          this.setState({ pairStep:'done', devices:[...s.devices, { id:'d3', name:'iPad', status:'az önce', kind:'phone', online:true }] });
+        }, 1700);
+      },
+
+      // conflict flow
+      hasConflict: s.hasConflict,
+      conflictOpen: s.conflictOpen,
+      openConflict: ()=> this.setState({ conflictOpen:true }),
+      closeConflict: ()=> this.setState({ conflictOpen:false }),
+      pickVersion: (e)=> this.setState({ conflictPick: e.currentTarget.dataset.v }),
+      verABorder: s.conflictPick==='a' ? '1.5px solid #2C7D6D' : '1px solid #E6E2DA',
+      verAShadow: s.conflictPick==='a' ? '0 0 0 3px rgba(44,125,109,.12)' : 'none',
+      verADot: s.conflictPick==='a' ? '6px solid #2C7D6D' : '2px solid #CFC8BC',
+      verBBorder: s.conflictPick==='b' ? '1.5px solid #2C7D6D' : '1px solid #E6E2DA',
+      verBShadow: s.conflictPick==='b' ? '0 0 0 3px rgba(44,125,109,.12)' : 'none',
+      verBDot: s.conflictPick==='b' ? '6px solid #2C7D6D' : '2px solid #CFC8BC',
+      keepSelected: ()=>{ this.setState({ conflictOpen:false, hasConflict:false }); this.flash('Çakışma çözüldü'); },
+      keepBoth: ()=>{ this.setState({ conflictOpen:false, hasConflict:false }); this.flash('İki sürüm de tutuldu'); },
+
+      toastShow: !!s.toast, toastText: s.toast||'',
+    };
+  }
+}
+</script>
+</body>
+</html>

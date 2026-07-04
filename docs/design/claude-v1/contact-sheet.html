@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>free-task — Ekran Kontakt Föyü (claude-v1)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing:border-box; margin:0; padding:0; -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+  body { font-family:'Hanken Grotesk',sans-serif; background:#EDEAE3; color:#26231F; padding:48px 40px 80px; }
+  header { max-width:1200px; margin:0 auto 40px; }
+  .eyebrow { font:500 12px/1 'IBM Plex Mono',monospace; letter-spacing:.14em; color:#2C7D6D; text-transform:uppercase; }
+  h1 { font:700 34px/1.1 'Hanken Grotesk'; letter-spacing:-.02em; margin:12px 0 10px; }
+  .sub { font:400 15px/1.55 'Hanken Grotesk'; color:#6A645C; max-width:680px; }
+  .meta { display:flex; gap:8px; flex-wrap:wrap; margin-top:16px; }
+  .meta span { font:500 12px 'IBM Plex Mono'; background:#fff; border:1px solid #E6E2DA; border-radius:20px; padding:5px 11px; color:#6A645C; }
+  .phase { max-width:1200px; margin:0 auto 40px; break-inside:avoid; }
+  .phase h2 { font:700 18px 'Hanken Grotesk'; display:flex; align-items:center; gap:10px; margin-bottom:16px; padding-bottom:10px; border-bottom:1px solid #DCD7CD; }
+  .dot { width:11px; height:11px; border-radius:4px; display:inline-block; }
+  .count { font:600 12px 'IBM Plex Mono'; color:#A79F94; margin-left:auto; }
+  .grid { display:grid; grid-template-columns:repeat(5, 1fr); gap:16px; }
+  .card { background:#fff; border:1px solid #E6E2DA; border-radius:14px; overflow:hidden; break-inside:avoid; }
+  .imgwrap { background:#EDEAE3; aspect-ratio:390/844; display:flex; align-items:center; justify-content:center; overflow:hidden; }
+  .imgwrap img { width:100%; height:100%; object-fit:cover; object-position:top; display:block; }
+  figcaption { font:600 12px 'Hanken Grotesk'; padding:9px 11px; display:flex; gap:6px; align-items:baseline; }
+  .num { font:700 12px 'IBM Plex Mono'; }
+  /* wide reference sheets span more columns */
+  .phase:nth-child(2) .imgwrap, .phase:nth-child(4) .card:last-child .imgwrap { aspect-ratio:auto; }
+  @page { size:A3 landscape; margin:14mm; }
+  @media print {
+    body { background:#fff; padding:0; }
+    .phase { margin-bottom:24px; }
+  }
+</style>
+</head>
+<body>
+  <header>
+    <div class="eyebrow">free-task · claude-v1 · kontakt föyü</div>
+    <h1>Tüm ekranlar tek bakışta</h1>
+    <p class="sub">Quiet Productivity yönünde, mobil öncelikli, offline & yerel şifreli görev yöneticisi. MVP + Faz 2 + Faz 3 tüm ekranlar ve interaktif prototip kareleri. Renk kodu: yeşil MVP, amber Faz 2, mor Faz 3.</p>
+    <div class="meta"><span>36 ekran</span><span>3 faz</span><span>light + dark parite</span><span>Hanken Grotesk · IBM Plex Mono</span><span>Yazdır → PDF (A3 yatay)</span></div>
+  </header>
+  <section class="phase">
+    <h2><span class="dot" style="background:#2C7D6D"></span>MVP — Sessiz çekirdek <span class="count">10</span></h2>
+    <div class="grid"><figure class="card">
+      <div class="imgwrap"><img src="screens/01-vault-setup.png" alt="Yerel kasa kurulumu"/></div>
+      <figcaption><span class="num" style="color:#2C7D6D">01</span> Yerel kasa kurulumu</figcaption>
+    </figure><figure class="card">
+      <div class="imgwrap"><img src="screens/02-today.png" alt="Bugün / günlük liste"/></div>
+      <figcaption><span class="num" style="color:#2C7D6D">02</span> Bugün / günlük liste</figcaption>
+    </figure><figure class="card">
+      <div class="imgwrap"><img src="screens/03-add-task.png" alt="Yeni görev ekle"/></div>
+      <figcaption><span class="num" style="color:#2C7D6D">03</span> Yeni görev ekle</figcaption>
+    </figure><figure class="card">
+      <div class="imgwrap"><img src="screens/04-task-detail.png" alt="Görev detayı"/></div>
+      <figcaption><span class="num" style="color:#2C7D6D">04</span> Görev detayı</figcaption>
+    </figure><figure class="card">
+      <div class="imgwrap"><img src="screens/05-repeat-editor.png" alt="Tekrar kuralı"/></div>
+      <figcaption><span class="num" style="color:#2C7D6D">05</span> Tekrar kuralı</figcaption>
+    </figure><figure class="card">
+      <div class="imgwrap"><img src="screens/06-settings.png" alt="Ayarlar"/></div>
+      <figcaption><span class="num" style="color:#2C7D6D">06</span> Ayarlar</figcaption>
+    </figure><figure class="card">
+      <div class="imgwrap"><img src="screens/08-stats.png" alt="İstatistik"/></div>
+      <figcaption><span class="num" style="color:#2C7D6D">08</span> İstatistik</figcaption>
+    </figure><figure class="card">
+      <div class="imgwrap"><img src="screens/09-locked-vault.png" alt="Kasa kilitli"/></div>
+      <figcaption><span class="num" style="color:#2C7D6D">09</span> Kasa kilitli</figcaption>
+    </figure><figure class="card">
+      <div class="imgwrap"><img src="screens/10-pool.png" alt="Havuz"/></div>
+      <figcaption><span class="num" style="color:#2C7D6D">10</span> Havuz</figcaption>
+    </figure><figure class="card">
+      <div class="imgwrap"><img src="screens/11-calendar.png" alt="Takvim"/></div>
+      <figcaption><span class="num" style="color:#2C7D6D">11</span> Takvim</figcaption>
+    </figure></div>
+  </section><section class="phase">
+    <h2><span class="dot" style="background:#2C7D6D"></span>MVP — Referans <span class="count">3</span></h2>
+    <div class="grid"><figure class="card">
+      <div class="imgwrap"><img src="screens/07-phase-expansion-map.png" alt="Faz genişleme haritası"/></div>
+      <figcaption><span class="num" style="color:#2C7D6D">07</span> Faz genişleme haritası</figcaption>
+    </figure><figure class="card">
+      <div class="imgwrap"><img src="screens/12-states.png" alt="Durum tasarımları"/></div>
+      <figcaption><span class="num" style="color:#2C7D6D">12</span> Durum tasarımları</figcaption>
+    </figure><figure class="card">
+      <div class="imgwrap"><img src="screens/13-dark-parity.png" alt="Dark parite seti"/></div>
+      <figcaption><span class="num" style="color:#2C7D6D">13</span> Dark parite seti</figcaption>
+    </figure></div>
+  </section><section class="phase">
+    <h2><span class="dot" style="background:#B7791F"></span>Faz 2 — Sync & ekip <span class="count">10</span></h2>
+    <div class="grid"><figure class="card">
+      <div class="imgwrap"><img src="screens/14-sync-status.png" alt="Sync durumu"/></div>
+      <figcaption><span class="num" style="color:#B7791F">14</span> Sync durumu</figcaption>
+    </figure><figure class="card">
+      <div class="imgwrap"><img src="screens/15-device-pairing.png" alt="Cihaz eşleştirme"/></div>
+      <figcaption><span class="num" style="color:#B7791F">15</span> Cihaz eşleştirme</figcaption>
+    </figure><figure class="card">
+      <div class="imgwrap"><img src="screens/16-recovery-key.png" alt="Kurtarma anahtarı"/></div>
+      <figcaption><span class="num" style="color:#B7791F">16</span> Kurtarma anahtarı</figcaption>
+    </figure><figure class="card">
+      <div class="imgwrap"><img src="screens/17-server-connection.png" alt="Sunucu bağlantısı"/></div>
+      <figcaption><span class="num" style="color:#B7791F">17</span> Sunucu bağlantısı</figcaption>
+    </figure><figure class="card">
+      <div class="imgwrap"><img src="screens/18-roles-members.png" alt="Roller & üyeler"/></div>
+      <figcaption><span class="num" style="color:#B7791F">18</span> Roller & üyeler</figcaption>
+    </figure><figure class="card">
+      <div class="imgwrap"><img src="screens/19-workspace-assignment.png" alt="Workspace + atama"/></div>
+      <figcaption><span class="num" style="color:#B7791F">19</span> Workspace + atama</figcaption>
+    </figure><figure class="card">
+      <div class="imgwrap"><img src="screens/20-advanced-stats.png" alt="Gelişmiş istatistik"/></div>
+      <figcaption><span class="num" style="color:#B7791F">20</span> Gelişmiş istatistik</figcaption>
+    </figure><figure class="card">
+      <div class="imgwrap"><img src="screens/21-theme-store.png" alt="Tema mağazası"/></div>
+      <figcaption><span class="num" style="color:#B7791F">21</span> Tema mağazası</figcaption>
+    </figure><figure class="card">
+      <div class="imgwrap"><img src="screens/22-sync-conflict.png" alt="Sync conflict"/></div>
+      <figcaption><span class="num" style="color:#B7791F">22</span> Sync conflict</figcaption>
+    </figure><figure class="card">
+      <div class="imgwrap"><img src="screens/23-faz2-dark-parity.png" alt="Faz 2 dark parite"/></div>
+      <figcaption><span class="num" style="color:#B7791F">23</span> Faz 2 dark parite</figcaption>
+    </figure></div>
+  </section><section class="phase">
+    <h2><span class="dot" style="background:#6D5AB7"></span>Faz 3 — AI & platform <span class="count">11</span></h2>
+    <div class="grid"><figure class="card">
+      <div class="imgwrap"><img src="screens/24-ai-command-bar.png" alt="AI komut çubuğu"/></div>
+      <figcaption><span class="num" style="color:#6D5AB7">24</span> AI komut çubuğu</figcaption>
+    </figure><figure class="card">
+      <div class="imgwrap"><img src="screens/25-ai-approval.png" alt="AI onay kartı"/></div>
+      <figcaption><span class="num" style="color:#6D5AB7">25</span> AI onay kartı</figcaption>
+    </figure><figure class="card">
+      <div class="imgwrap"><img src="screens/26-voice-input.png" alt="Ses girişi"/></div>
+      <figcaption><span class="num" style="color:#6D5AB7">26</span> Ses girişi</figcaption>
+    </figure><figure class="card">
+      <div class="imgwrap"><img src="screens/27-image-input.png" alt="Görsel girişi"/></div>
+      <figcaption><span class="num" style="color:#6D5AB7">27</span> Görsel girişi</figcaption>
+    </figure><figure class="card">
+      <div class="imgwrap"><img src="screens/28-agent-plugin.png" alt="Agent / plugin"/></div>
+      <figcaption><span class="num" style="color:#6D5AB7">28</span> Agent / plugin</figcaption>
+    </figure><figure class="card">
+      <div class="imgwrap"><img src="screens/29-api-webhook.png" alt="API & webhook"/></div>
+      <figcaption><span class="num" style="color:#6D5AB7">29</span> API & webhook</figcaption>
+    </figure><figure class="card">
+      <div class="imgwrap"><img src="screens/30-system-prompt.png" alt="AI davranışı"/></div>
+      <figcaption><span class="num" style="color:#6D5AB7">30</span> AI davranışı</figcaption>
+    </figure><figure class="card">
+      <div class="imgwrap"><img src="screens/31-task-tree-dag.png" alt="Görev ağacı / DAG"/></div>
+      <figcaption><span class="num" style="color:#6D5AB7">31</span> Görev ağacı / DAG</figcaption>
+    </figure><figure class="card">
+      <div class="imgwrap"><img src="screens/32-gamification.png" alt="Oyunlaştırma"/></div>
+      <figcaption><span class="num" style="color:#6D5AB7">32</span> Oyunlaştırma</figcaption>
+    </figure><figure class="card">
+      <div class="imgwrap"><img src="screens/33-ai-pending.png" alt="AI pending"/></div>
+      <figcaption><span class="num" style="color:#6D5AB7">33</span> AI pending</figcaption>
+    </figure><figure class="card">
+      <div class="imgwrap"><img src="screens/34-faz3-dark-parity.png" alt="Faz 3 dark parite"/></div>
+      <figcaption><span class="num" style="color:#6D5AB7">34</span> Faz 3 dark parite</figcaption>
+    </figure></div>
+  </section><section class="phase">
+    <h2><span class="dot" style="background:#26231F"></span>İnteraktif prototip kareleri <span class="count">2</span></h2>
+    <div class="grid"><figure class="card">
+      <div class="imgwrap"><img src="screens/35-ai-prototype-flow.png" alt="AI-onay akışı (prototip)"/></div>
+      <figcaption><span class="num" style="color:#26231F">35</span> AI-onay akışı (prototip)</figcaption>
+    </figure><figure class="card">
+      <div class="imgwrap"><img src="screens/36-sync-prototype-flow.png" alt="Sync akışı (prototip)"/></div>
+      <figcaption><span class="num" style="color:#26231F">36</span> Sync akışı (prototip)</figcaption>
+    </figure></div>
+  </section>
+</body>
+</html>

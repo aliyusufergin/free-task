@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  body { margin:0; background:#EDEAE3; display:flex; align-items:center; justify-content:center; min-height:100vh; font-family:'Hanken Grotesk',sans-serif; }
+  * { box-sizing:border-box; -webkit-font-smoothing:antialiased; }
+  .frame { width:390px; height:844px; border-radius:44px; background:#FAF9F6; position:relative; overflow:hidden; box-shadow:0 30px 70px -20px rgba(38,35,31,.4), 0 0 0 10px #26231F, 0 0 0 11px #3a352f; }
+  .scroll { position:absolute; top:0; left:0; right:0; bottom:0; overflow-y:auto; }
+  .scroll::-webkit-scrollbar{ display:none; }
+  button { font-family:inherit; cursor:pointer; }
+  @keyframes sheetUp { from{ transform:translateY(100%);} to{ transform:translateY(0);} }
+  @keyframes fade { from{ opacity:0;} to{ opacity:1;} }
+  @keyframes popIn { from{ opacity:0; transform:translateY(8px) scale(.98);} to{ opacity:1; transform:translateY(0) scale(1);} }
+  @keyframes dots { 0%,80%,100%{ opacity:.25;} 40%{ opacity:1;} }
+</style>
+</helmet>
+
+<div class="frame">
+  <div class="scroll">
+    <!-- status bar -->
+    <div style="display:flex;justify-content:space-between;align-items:center;padding:14px 26px 0;font:600 14px 'Hanken Grotesk';color:#26231F;">
+      <span>9:41</span>
+      <span style="display:inline-flex;gap:5px;align-items:center;font:500 11px 'IBM Plex Mono';color:#8A837A;"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#2C7D6D" stroke-width="2"><rect x="4" y="10.5" width="16" height="10" rx="2"/><path d="M8 10.5V8a4 4 0 0 1 8 0v2.5"/></svg>ŞİFRELİ</span>
+    </div>
+
+    <div style="padding:14px 20px 120px;">
+      <h2 style="font:700 28px/1 'Hanken Grotesk';margin:0;letter-spacing:-.02em;color:#26231F;">Bugün</h2>
+      <div style="font:500 14px 'Hanken Grotesk';color:#8A837A;margin-top:5px;">4 Temmuz, Cumartesi</div>
+
+      <!-- pending banner -->
+      <sc-if value="{{ hasPending }}" hint-placeholder-val="{{ false }}">
+        <div onClick="{{ reviewPending }}" style="display:flex;align-items:center;gap:10px;background:#ECE8F6;border:1px dashed #C7BCF0;border-radius:12px;padding:12px 14px;margin-top:16px;cursor:pointer;animation:fade .2s ease;">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#6D5AB7" stroke-width="2" style="flex:0 0 auto;"><path d="M12 3l1.9 4.6L18.5 9l-4.6 1.9L12 15l-1.9-4.1L5.5 9z" stroke-linejoin="round"/></svg>
+          <span style="flex:1;font:600 13px 'Hanken Grotesk';color:#4C3E8A;">AI {{ pendingCount }} görev öneriyor</span>
+          <span style="font:600 12px 'Hanken Grotesk';color:#6D5AB7;">İncele ›</span>
+        </div>
+      </sc-if>
+
+      <!-- task list -->
+      <div style="margin-top:16px;display:flex;flex-direction:column;gap:8px;">
+        <sc-for list="{{ tasks }}" as="t" hint-placeholder-count="2">
+          <div style="display:flex;gap:12px;background:#fff;border:1px solid #E6E2DA;border-radius:14px;padding:13px 14px;animation:popIn .25s ease;">
+            <div data-id="{{ t.id }}" onClick="{{ toggleTask }}" style="width:24px;height:24px;border-radius:7px;flex:0 0 auto;margin-top:1px;display:flex;align-items:center;justify-content:center;cursor:pointer;background:{{ t.boxBg }};border:2px solid {{ t.boxBorder }};">
+              <span style="display:{{ t.checkShow }};"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l4.5 4.5L19 7"/></svg></span>
+            </div>
+            <div style="flex:1;min-width:0;">
+              <div style="display:flex;align-items:center;gap:7px;"><i style="width:7px;height:7px;border-radius:50%;background:{{ t.priCol }};flex:0 0 auto;"></i><span style="font:600 15px 'Hanken Grotesk';color:{{ t.titleCol }};text-decoration:{{ t.strike }};">{{ t.title }}</span></div>
+              <div style="display:flex;gap:6px;margin-top:8px;align-items:center;">
+                <span style="font:500 11px 'Hanken Grotesk';color:#2C7D6D;background:#E4F1ED;border-radius:6px;padding:3px 8px;">{{ t.tag }}</span>
+                <span style="display:{{ t.aiShow }};font:500 11px 'Hanken Grotesk';color:#6D5AB7;background:#ECE8F6;border-radius:6px;padding:3px 8px;">✦ AI ekledi</span>
+              </div>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+
+      <div style="font:500 13px 'Hanken Grotesk';color:#A79F94;text-align:center;margin-top:20px;padding:14px;border:1px dashed #DCD7CD;border-radius:12px;">✦ butonuna bas → AI'ya bir şey iste → önerileri onayla</div>
+    </div>
+  </div>
+
+  <!-- AI FAB -->
+  <button onClick="{{ openBar }}" style="position:absolute;right:20px;bottom:26px;width:60px;height:60px;border:none;border-radius:20px;background:#6D5AB7;box-shadow:0 10px 24px -6px rgba(109,90,183,.6);display:flex;align-items:center;justify-content:center;">
+    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linejoin="round"><path d="M12 3l1.9 4.6L18.5 9l-4.6 1.9L12 15l-1.9-4.1L5.5 9z"/><path d="M18 15l.8 2 2 .8-2 .8-.8 2-.8-2-2-.8 2-.8z"/></svg>
+  </button>
+
+  <!-- ===== COMMAND BAR SHEET ===== -->
+  <sc-if value="{{ barOpen }}" hint-placeholder-val="{{ false }}">
+    <div onClick="{{ closeBar }}" style="position:absolute;inset:0;background:rgba(8,7,6,.5);animation:fade .18s ease;"></div>
+    <div style="position:absolute;left:0;right:0;bottom:0;background:#242019;border-radius:26px 26px 0 0;padding:14px 20px 24px;box-shadow:0 -12px 40px -12px rgba(0,0,0,.5);border-top:1px solid #34302A;animation:sheetUp .24s cubic-bezier(.2,.8,.2,1);">
+      <div style="width:38px;height:5px;border-radius:3px;background:#4A453E;margin:0 auto 16px;"></div>
+      <div style="display:flex;align-items:center;gap:10px;background:#1B1815;border:1.5px solid #8878C9;box-shadow:0 0 0 3px rgba(136,120,201,.18);border-radius:14px;padding:13px 14px;">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#A594E0" stroke-width="2" style="flex:0 0 auto;"><path d="M12 3l1.9 4.6L18.5 9l-4.6 1.9L12 15l-1.9-4.1L5.5 9z" stroke-linejoin="round"/></svg>
+        <input value="{{ prompt }}" onInput="{{ onType }}" placeholder="AI'dan ne istersin?" style="flex:1;border:none;outline:none;background:none;font:500 15px 'Hanken Grotesk';color:#ECE8E1;" />
+      </div>
+      <div style="font:500 11px 'Hanken Grotesk';color:#8F877C;margin:8px 4px 16px;">AI önerir · sen onaylamadan hiçbir şey eklenmez</div>
+      <div style="font:600 10px 'IBM Plex Mono';color:#6F6A61;letter-spacing:.06em;margin:0 2px 8px;">ÖNERİLEN</div>
+      <div style="display:flex;flex-direction:column;gap:7px;">
+        <button data-q="Haftaya taşınma için plan çıkar" onClick="{{ pickPrompt }}" style="text-align:left;display:flex;align-items:center;gap:9px;background:#1B1815;border:1px solid #34302A;border-radius:11px;padding:11px 13px;color:#ABA398;font:400 13px 'Hanken Grotesk';">Haftaya taşınma için plan çıkar</button>
+        <button data-q="Bu haftanın rutinlerini özetle" onClick="{{ pickPrompt }}" style="text-align:left;display:flex;align-items:center;gap:9px;background:#1B1815;border:1px solid #34302A;border-radius:11px;padding:11px 13px;color:#ABA398;font:400 13px 'Hanken Grotesk';">Bu haftanın rutinlerini özetle</button>
+      </div>
+      <button onClick="{{ generate }}" style="width:100%;height:52px;border:none;border-radius:14px;background:{{ genBg }};color:#17103A;font:700 16px 'Hanken Grotesk';margin-top:16px;">{{ genLabel }}</button>
+    </div>
+  </sc-if>
+
+  <!-- ===== APPROVAL OVERLAY ===== -->
+  <sc-if value="{{ approvalOpen }}" hint-placeholder-val="{{ false }}">
+    <div style="position:absolute;inset:0;background:#FAF9F6;animation:fade .2s ease;display:flex;flex-direction:column;">
+      <div style="display:flex;align-items:center;justify-content:space-between;padding:16px 18px 0;">
+        <button onClick="{{ closeApproval }}" style="width:40px;height:40px;border-radius:11px;background:#fff;border:1px solid #E6E2DA;display:flex;align-items:center;justify-content:center;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#6A645C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg></button>
+        <span style="display:inline-flex;align-items:center;gap:6px;font:600 15px 'Hanken Grotesk';color:#26231F;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#6D5AB7" stroke-width="2"><path d="M12 3l1.9 4.6L18.5 9l-4.6 1.9L12 15l-1.9-4.1L5.5 9z" stroke-linejoin="round"/></svg>AI önerisi</span>
+        <span style="width:40px;"></span>
+      </div>
+      <div style="padding:14px 20px 0;flex:1;overflow-y:auto;">
+        <!-- thinking -->
+        <sc-if value="{{ thinking }}" hint-placeholder-val="{{ true }}">
+          <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;padding:80px 0;">
+            <div style="display:flex;gap:6px;margin-bottom:16px;"><i style="width:10px;height:10px;border-radius:50%;background:#8878C9;animation:dots 1.2s infinite;"></i><i style="width:10px;height:10px;border-radius:50%;background:#8878C9;animation:dots 1.2s infinite .2s;"></i><i style="width:10px;height:10px;border-radius:50%;background:#8878C9;animation:dots 1.2s infinite .4s;"></i></div>
+            <div style="font:500 14px 'Hanken Grotesk';color:#6D5AB7;">"{{ prompt }}" düşünülüyor…</div>
+            <div style="font:400 12px 'Hanken Grotesk';color:#8A837A;margin-top:6px;">yerel · offline</div>
+          </div>
+        </sc-if>
+        <!-- suggestions -->
+        <sc-if value="{{ showSuggestions }}" hint-placeholder-val="{{ false }}">
+          <div style="display:flex;gap:9px;background:#ECE8F6;border-radius:12px;padding:12px 14px;margin-bottom:16px;">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#6D5AB7" stroke-width="2" style="flex:0 0 auto;margin-top:1px;"><circle cx="12" cy="12" r="9"/><path d="M12 16v-4M12 8v.01" stroke-linecap="round"/></svg>
+            <span style="font:400 12.5px/1.45 'Hanken Grotesk';color:#4C3E8A;"><b>{{ remainCount }} görev</b> öneriliyor. Her biri onaya kadar listede kalıcı değil — tek tek reddedebilir veya hepsini onaylayabilirsin.</span>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:8px;">
+            <sc-for list="{{ suggestions }}" as="s" hint-placeholder-count="4">
+              <div style="display:flex;gap:11px;align-items:center;background:#FBFAFE;border:1px dashed #C7BCF0;border-radius:12px;padding:12px 13px;animation:popIn .2s ease;">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#6D5AB7" stroke-width="2" style="flex:0 0 auto;"><path d="M12 3l1.9 4.6L18.5 9l-4.6 1.9L12 15l-1.9-4.1L5.5 9z" stroke-linejoin="round"/></svg>
+                <div style="flex:1;min-width:0;"><div style="font:600 14px 'Hanken Grotesk';color:#26231F;">{{ s.title }}</div><div style="font:500 11px 'Hanken Grotesk';color:#8A837A;margin-top:3px;">{{ s.meta }}</div></div>
+                <button data-id="{{ s.id }}" onClick="{{ rejectOne }}" style="width:30px;height:30px;border-radius:8px;border:none;background:#F6E3DD;display:flex;align-items:center;justify-content:center;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#B4442F" stroke-width="2.4" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+              </div>
+            </sc-for>
+          </div>
+          <div style="display:{{ emptyShow }};text-align:center;font:500 14px 'Hanken Grotesk';color:#A79F94;padding:40px 0;">Tüm öneriler reddedildi.</div>
+        </sc-if>
+      </div>
+      <sc-if value="{{ showSuggestions }}" hint-placeholder-val="{{ false }}">
+        <div style="padding:14px 18px 24px;background:linear-gradient(transparent,#FAF9F6 22%);display:flex;gap:9px;">
+          <button onClick="{{ rejectAll }}" style="flex:1;height:50px;border:1px solid #E6E2DA;border-radius:13px;background:#fff;color:#26231F;font:600 15px 'Hanken Grotesk';">Tümünü reddet</button>
+          <button onClick="{{ approveAll }}" style="flex:1;height:50px;border:none;border-radius:13px;background:{{ approveBg }};color:#fff;font:700 15px 'Hanken Grotesk';display:flex;align-items:center;justify-content:center;gap:7px;"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l4.5 4.5L19 7"/></svg>{{ approveLabel }}</button>
+        </div>
+      </sc-if>
+    </div>
+  </sc-if>
+
+  <!-- TOAST -->
+  <sc-if value="{{ toastShow }}" hint-placeholder-val="{{ false }}">
+    <div style="position:absolute;left:20px;right:20px;bottom:100px;display:flex;align-items:center;gap:11px;background:#26231F;border-radius:12px;padding:12px 14px;animation:fade .2s ease;box-shadow:0 10px 30px -8px rgba(0,0,0,.4);">
+      <div style="width:22px;height:22px;border-radius:50%;background:#A594E0;flex:0 0 auto;display:flex;align-items:center;justify-content:center;"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#17103A" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l4.5 4.5L19 7"/></svg></div>
+      <span style="font:500 13px 'Hanken Grotesk';color:#F4F2ED;flex:1;">{{ toastText }}</span>
+    </div>
+  </sc-if>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = {
+    tasks: [
+      { id:'t1', title:'Sprint planını gönder', tag:'iş', pri:'high', done:false, ai:false },
+      { id:'t2', title:'30 dk yürüyüş', tag:'sağlık', pri:'low', done:false, ai:false },
+    ],
+    barOpen:false, prompt:'',
+    approvalOpen:false, thinking:false,
+    suggestions:[],
+    pending:[],           // suggestions parked when banner dismissed
+    toast:null,
+  };
+
+  // canned AI responses keyed loosely by prompt
+  planFor(p){
+    const t = (p||'').toLowerCase();
+    if (t.includes('rutin') || t.includes('özetle')) {
+      return [
+        { id:'s1', title:'Yürüyüş serisini 14 güne çıkar', meta:'sağlık · orta' },
+        { id:'s2', title:'Su takibini sabahlara taşı', meta:'sağlık · düşük' },
+        { id:'s3', title:'Haftalık okuma hedefini gözden geçir', meta:'kişisel · düşük' },
+      ];
+    }
+    // default: taşınma planı
+    return [
+      { id:'s1', title:'Nakliye şirketi araştır', meta:'Pzt · yüksek' },
+      { id:'s2', title:'Koli malzemesi sipariş et', meta:'Sal · orta' },
+      { id:'s3', title:'Adres değişikliği bildir', meta:'Çar · orta' },
+      { id:'s4', title:'Eski eşyaları bağışla', meta:'Per · düşük' },
+    ];
+  }
+
+  priColor(p){ return p==='high' ? '#B4442F' : p==='med' ? '#B7791F' : '#9C958B'; }
+  flash(msg){ this.setState({ toast:msg }); clearTimeout(this._t); this._t=setTimeout(()=>this.setState({toast:null}),2400); }
+
+  renderVals(){
+    const s = this.state;
+    const tasks = s.tasks.map(t=>({
+      id:t.id, title:t.title, tag:t.tag,
+      priCol:this.priColor(t.pri),
+      boxBg: t.done?'#2C7D6D':'transparent',
+      boxBorder: t.done?'#2C7D6D':'#CFC8BC',
+      checkShow: t.done?'inline-flex':'none',
+      titleCol: t.done?'#8A837A':'#26231F',
+      strike: t.done?'line-through':'none',
+      aiShow: t.ai?'inline-block':'none',
+    }));
+
+    return {
+      tasks,
+      hasPending: s.pending.length>0 && !s.approvalOpen,
+      pendingCount: s.pending.length,
+      reviewPending: ()=> this.setState({ approvalOpen:true, thinking:false, suggestions:s.pending, pending:[] }),
+
+      toggleTask: (e)=>{ const id=e.currentTarget.dataset.id;
+        this.setState({ tasks: s.tasks.map(t=>t.id===id?{...t,done:!t.done}:t) }); },
+
+      // command bar
+      barOpen: s.barOpen,
+      prompt: s.prompt,
+      openBar: ()=> this.setState({ barOpen:true }),
+      closeBar: ()=> this.setState({ barOpen:false }),
+      onType: (e)=> this.setState({ prompt:e.target.value }),
+      pickPrompt: (e)=> this.setState({ prompt:e.currentTarget.dataset.q }),
+      genBg: s.prompt.trim()?'#A594E0':'#5A4E86',
+      genLabel: 'Öneri oluştur',
+      generate: ()=>{ const p=s.prompt.trim(); if(!p) return;
+        this.setState({ barOpen:false, approvalOpen:true, thinking:true, suggestions:[] });
+        clearTimeout(this._g);
+        this._g = setTimeout(()=> this.setState({ thinking:false, suggestions:this.planFor(p) }), 1400);
+      },
+
+      // approval
+      approvalOpen: s.approvalOpen,
+      thinking: s.thinking,
+      showSuggestions: s.approvalOpen && !s.thinking,
+      suggestions: s.suggestions,
+      remainCount: s.suggestions.length,
+      emptyShow: s.suggestions.length? 'none':'block',
+      approveBg: s.suggestions.length? '#6D5AB7':'#B3A9D4',
+      approveLabel: s.suggestions.length ? (s.suggestions.length+' görevi onayla') : 'Onayla',
+      rejectOne: (e)=>{ const id=e.currentTarget.dataset.id;
+        this.setState({ suggestions:s.suggestions.filter(x=>x.id!==id) }); },
+      rejectAll: ()=>{ this.setState({ approvalOpen:false, suggestions:[], pending:[], prompt:'' });
+        this.flash('Öneriler reddedildi — hiçbir şey eklenmedi'); },
+      approveAll: ()=>{ if(!s.suggestions.length){ this.setState({approvalOpen:false}); return; }
+        const added = s.suggestions.map((x,i)=>({ id:'a'+Date.now()+i, title:x.title, tag:'plan', pri:'med', done:false, ai:true }));
+        this.setState({ tasks:[...added, ...s.tasks], approvalOpen:false, suggestions:[], pending:[], prompt:'' });
+        this.flash(added.length+' görev onaylandı ve eklendi'); },
+      closeApproval: ()=>{ // park as pending (human-in-the-loop: not persisted to list)
+        if(s.suggestions.length) this.setState({ approvalOpen:false, pending:s.suggestions, suggestions:[] });
+        else this.setState({ approvalOpen:false });
+      },
+
+      toastShow: !!s.toast, toastText: s.toast||'',
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -111,6 +111,7 @@ Kisisel uretkenlik araclari yaygin olsa da gizlilik, yerel calisma, acik kaynak/
 13. Veri import: free-task JSON; diger araclar icin sonraki faza hazir import altyapisi.
 14. Yerel dogal dil tarih/saat ayrishtirma: "yarin 15:00" gibi basit girdiler.
 15. Link yapistirildiginda kullanici onayi ile baslik/metadata cekme. Offline veya hata durumunda link ham haliyle saklanir.
+16. Yerel bildirimler: deadline ve rutin hatirlaticilari icin opt-in, cihaz ici local notifications.
 
 ### Sonraki Faz
 
@@ -328,7 +329,7 @@ MVP'de analytics yerel ve kullaniciya gorunur olmalıdır. Uzaktan telemetry var
 | Gizlilik | Harici servise veri gonderimi varsayilan kapali | Kullanici onayi olmadan link/AI/telemetry yok |
 | Tasınabilirlik | Veri disari alinabilir olmalı | JSON ve Markdown |
 | Erisilebilirlik | Temel mobil erisilebilirlik | Ekran okuyucu, kontrast, buton alternatifi |
-| Lokalizasyon | Ilk dil TBD | Turkce ve/veya Ingilizce karari bekliyor |
+| Lokalizasyon | Turkce + Ingilizce | Cihaz dili varsayilani ve Ayarlar'dan dil degistirme |
 | Bakim | Fazlara ayrilmis mimari | Sync/AI/API sonradan eklenebilir |
 
 ## 18. Edge Case'ler ve Hata Senaryolari
@@ -387,22 +388,24 @@ MVP'de analytics yerel ve kullaniciya gorunur olmalıdır. Uzaktan telemetry var
 
 | Soru | Sahip | Karar Tarihi | Etki |
 | --- | --- | --- | --- |
-| Ilk dil Turkce mi, Ingilizce mi, iki dilli mi? | Kullanici | TBD | UI metinleri, dokumantasyon |
-| Mobil MVP Android oncelikli mi, iOS da ayni anda mi? | Kullanici/Teknik tasarim | TBD | Build/test kapsami |
-| Flutter kesin stack olacak mi, alternatifler karsilastirilacak mi? | Teknik tasarim | TBD | Mimari ve paket secimi |
-| Sifre/kurtarma modeli nasil olacak? | Teknik tasarim | TBD | E2EE kullanilabilirligi |
-| Yerel bildirimler MVP'ye dahil mi? | Kullanici | TBD | Hatirlatici deneyimi |
 | Lisans ne olacak? | Kullanici | TBD | Acik kaynak kullanimi |
 | App store dagitimi hedefleniyor mu? | Kullanici | TBD | Yayın ve build sureci |
 
+### Karara Baglanan Konular
+
+| Konu | Karar | Tarih |
+| --- | --- | --- |
+| UI dili | Turkce + Ingilizce | 2026-07-04 |
+| Mobil platform onceligi | Android + iOS es zamanli | 2026-07-04 |
+| Stack | Flutter/Dart adayligi teknik tasarimda baglayici MVP karari olarak benimsendi; SQLCipher adapter spike'i uygulama oncesi risk azaltma gorevi | 2026-07-04 |
+| Sifre/kurtarma modeli | Parola + biyometrik + kurtarma anahtari | 2026-07-04 |
+| Yerel bildirimler | MVP'ye dahil; opt-in ve cihaz ici local notifications | 2026-07-04 |
+
 ## 22. Uygulama Oncesi Karar Listesi
 
-- Flutter/Dart stack kararini teknik tasarimda resmi kaynaklar ve paket olgunlugu ile kesinlestir.
-- Yerel veri katmani ve sifreleme yaklasimini sec.
-- E2EE icin anahtar turetme, saklama, kurtarma ve export politikasini tanimla.
-- Mobil MVP platformlarini netlestir: Android, iOS veya ikisi.
-- Ilk UI dili ve dokumantasyon dilini sec.
-- Yerel bildirimleri MVP'ye dahil edip etmeme kararini ver.
+- SQLCipher adapter paket olgunlugunu Android+iOS spike ile dogrula.
+- E2EE icin anahtar turetme, saklama, recovery ve export politikasini uygulama oncesi teknik spike ile netlestir.
+- Local notification lock screen gizlilik varsayilanini sec.
 - GitHub repo icin `.gitignore`, lisans, README ve katkı notlarini planla.
 
 ## 23. Gerekli Resmi Dokumantasyon ve Skill'ler
@@ -428,6 +431,4 @@ MVP'de analytics yerel ve kullaniciya gorunur olmalıdır. Uzaktan telemetry var
 ### Kullanıcıdan Istenen Kaynaklar
 
 - Varsa logo, isim alternatifi veya marka tercihi.
-- Ilk UI dili karari.
-- Mobil platform onceligi: Android, iOS veya ikisi.
 - Lisans tercihi: MIT, Apache-2.0, GPL/AGPL veya karar bekliyor.

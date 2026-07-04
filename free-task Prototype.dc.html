@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  body { margin:0; background:#EDEAE3; display:flex; align-items:center; justify-content:center; min-height:100vh; font-family:'Hanken Grotesk',sans-serif; }
+  * { box-sizing:border-box; -webkit-font-smoothing:antialiased; }
+  .frame { width:390px; height:844px; border-radius:44px; background:#FAF9F6; position:relative; overflow:hidden; box-shadow:0 30px 70px -20px rgba(38,35,31,.4), 0 0 0 10px #26231F, 0 0 0 11px #3a352f; }
+  .scroll { position:absolute; top:0; left:0; right:0; bottom:82px; overflow-y:auto; }
+  .scroll::-webkit-scrollbar{ display:none; }
+  button { font-family:inherit; cursor:pointer; }
+  @keyframes sheetUp { from{ transform:translateY(100%);} to{ transform:translateY(0);} }
+  @keyframes fade { from{ opacity:0;} to{ opacity:1;} }
+</style>
+</helmet>
+
+<div class="frame">
+
+  <!-- ========== SCROLL CONTENT ========== -->
+  <div class="scroll">
+    <!-- status bar -->
+    <div style="display:flex;justify-content:space-between;align-items:center;padding:14px 26px 0;font:600 14px 'Hanken Grotesk';color:#26231F;">
+      <span>9:41</span>
+      <span style="display:inline-flex;gap:5px;align-items:center;font:500 11px 'IBM Plex Mono';color:#8A837A;"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#2C7D6D" stroke-width="2"><rect x="4" y="10.5" width="16" height="10" rx="2"/><path d="M8 10.5V8a4 4 0 0 1 8 0v2.5"/></svg>ŞİFRELİ</span>
+    </div>
+
+    <!-- ===== TAB: BUGÜN ===== -->
+    <sc-if value="{{ isToday }}" hint-placeholder-val="{{ true }}">
+    <div style="padding:14px 20px 20px;">
+      <h2 style="font:700 28px/1 'Hanken Grotesk';margin:0;letter-spacing:-.02em;color:#26231F;">Bugün</h2>
+      <div style="font:500 14px 'Hanken Grotesk';color:#8A837A;margin-top:5px;">4 Temmuz, Cumartesi</div>
+      <div style="display:flex;gap:8px;margin-top:14px;">
+        <div style="flex:1;background:#fff;border:1px solid #E6E2DA;border-radius:12px;padding:10px 12px;"><div style="font:700 19px 'Hanken Grotesk';color:#26231F;">{{ doneCount }}<span style="font:500 12px;color:#8A837A;"> / {{ totalCount }}</span></div><div style="font:500 11px 'Hanken Grotesk';color:#8A837A;">Bugün</div></div>
+        <div style="flex:1;background:#fff;border:1px solid #E6E2DA;border-radius:12px;padding:10px 12px;"><div style="font:700 19px 'Hanken Grotesk';color:#2C7D6D;">12 🔥</div><div style="font:500 11px 'Hanken Grotesk';color:#8A837A;">Seri</div></div>
+        <div style="flex:1;background:#fff;border:1px solid #E6E2DA;border-radius:12px;padding:10px 12px;"><div style="font:700 19px 'Hanken Grotesk';color:#26231F;">{{ routineCount }}</div><div style="font:500 11px 'Hanken Grotesk';color:#8A837A;">Rutin</div></div>
+      </div>
+
+      <sc-for list="{{ todayTasks }}" as="t" hint-placeholder-count="3">
+        <div data-id="{{ t.id }}" onClick="{{ openRow }}" style="display:flex;gap:12px;background:#fff;border:1px solid {{ t.borderCol }};border-radius:14px;padding:13px 14px;margin-top:8px;cursor:pointer;">
+          <div data-id="{{ t.id }}" onClick="{{ toggleTask }}" style="width:24px;height:24px;border-radius:7px;flex:0 0 auto;margin-top:1px;display:flex;align-items:center;justify-content:center;background:{{ t.boxBg }};border:2px solid {{ t.boxBorder }};">
+            <span style="display:{{ t.checkShow }};">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l4.5 4.5L19 7"/></svg>
+            </span>
+          </div>
+          <div style="flex:1;min-width:0;">
+            <div style="display:flex;align-items:center;gap:7px;"><i style="width:7px;height:7px;border-radius:50%;background:{{ t.priCol }};flex:0 0 auto;"></i><span style="font:600 15px 'Hanken Grotesk';color:{{ t.titleCol }};text-decoration:{{ t.strike }};">{{ t.title }}</span></div>
+            <div style="display:flex;gap:6px;margin-top:8px;flex-wrap:wrap;align-items:center;">
+              <span style="display:{{ t.timeShow }};font:500 11px 'IBM Plex Mono';color:#6A645C;background:#F1EFEA;border-radius:6px;padding:3px 7px;">{{ t.time }}</span>
+              <span style="font:500 11px 'Hanken Grotesk';color:#2C7D6D;background:#E4F1ED;border-radius:6px;padding:3px 8px;">{{ t.tag }}</span>
+            </div>
+          </div>
+        </div>
+      </sc-for>
+
+      <div style="font:500 13px 'Hanken Grotesk';color:#A79F94;text-align:center;margin-top:20px;padding:14px;border:1px dashed #DCD7CD;border-radius:12px;">Görev tamamlamak için kutuya, detay için satıra dokun</div>
+    </div>
+    </sc-if>
+
+    <!-- ===== TAB: TAKVİM ===== -->
+    <sc-if value="{{ isCal }}" hint-placeholder-val="{{ false }}">
+    <div style="padding:14px 20px 20px;">
+      <h2 style="font:700 24px/1 'Hanken Grotesk';margin:0;letter-spacing:-.02em;color:#26231F;">Temmuz 2026</h2>
+      <div style="display:grid;grid-template-columns:repeat(7,1fr);gap:3px;margin-top:16px;">
+        <sc-for list="{{ calDays }}" as="d" hint-placeholder-count="35">
+          <div data-day="{{ d.n }}" onClick="{{ selectDay }}" style="aspect-ratio:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;border-radius:11px;cursor:pointer;background:{{ d.bg }};">
+            <span style="font:{{ d.weight }} 13px 'Hanken Grotesk';color:{{ d.col }};">{{ d.n }}</span>
+            <i style="width:4px;height:4px;border-radius:50%;background:{{ d.dot }};display:{{ d.dotShow }};"></i>
+          </div>
+        </sc-for>
+      </div>
+      <div style="font:700 15px 'Hanken Grotesk';color:#26231F;margin:20px 0 10px;">{{ selDayLabel }}</div>
+      <div style="display:flex;gap:11px;align-items:center;background:#fff;border:1px solid #E6E2DA;border-radius:12px;padding:12px 13px;margin-bottom:7px;"><span style="width:44px;font:500 11px 'IBM Plex Mono';color:#8A837A;">09:00</span><i style="width:6px;height:6px;border-radius:50%;background:#B4442F;"></i><span style="font:600 14px 'Hanken Grotesk';color:#26231F;">Sprint planını gönder</span></div>
+      <div style="display:flex;gap:11px;align-items:center;background:#fff;border:1px solid #E6E2DA;border-radius:12px;padding:12px 13px;"><span style="width:44px;font:500 11px 'IBM Plex Mono';color:#8A837A;">—</span><i style="width:6px;height:6px;border-radius:50%;background:#9C958B;"></i><span style="font:600 14px 'Hanken Grotesk';color:#26231F;">30 dk yürüyüş</span></div>
+    </div>
+    </sc-if>
+
+    <!-- ===== TAB: HAVUZ ===== -->
+    <sc-if value="{{ isPool }}" hint-placeholder-val="{{ false }}">
+    <div style="padding:14px 20px 20px;">
+      <h2 style="font:700 28px/1 'Hanken Grotesk';margin:0;letter-spacing:-.02em;color:#26231F;">Havuz</h2>
+      <div style="font:500 14px 'Hanken Grotesk';color:#8A837A;margin-top:5px;">Zamansız · {{ poolCount }} görev</div>
+      <sc-for list="{{ poolTasks }}" as="p" hint-placeholder-count="3">
+        <div style="display:flex;gap:12px;background:#fff;border:1px solid #E6E2DA;border-radius:14px;padding:13px 14px;margin-top:8px;align-items:center;">
+          <div style="width:22px;height:22px;border-radius:7px;border:2px solid #CFC8BC;flex:0 0 auto;"></div>
+          <div style="flex:1;min-width:0;">
+            <div style="display:flex;align-items:center;gap:7px;"><i style="width:7px;height:7px;border-radius:50%;background:{{ p.priCol }};flex:0 0 auto;"></i><span style="font:600 15px 'Hanken Grotesk';color:#26231F;">{{ p.title }}</span></div>
+            <span style="display:inline-block;font:500 11px 'Hanken Grotesk';color:#8A837A;background:#F1EFEA;border-radius:6px;padding:3px 8px;margin-top:8px;">{{ p.tag }}</span>
+          </div>
+          <button data-id="{{ p.id }}" onClick="{{ pullToToday }}" style="font:600 11px 'Hanken Grotesk';color:#2C7D6D;background:#E4F1ED;border:none;border-radius:8px;padding:8px 10px;white-space:nowrap;">Bugüne çek</button>
+        </div>
+      </sc-for>
+      <div style="display:{{ poolEmptyShow }};font:500 14px 'Hanken Grotesk';color:#A79F94;text-align:center;margin-top:40px;">Havuz boş — hepsini bugüne çektin.</div>
+    </div>
+    </sc-if>
+
+    <!-- ===== TAB: AYARLAR ===== -->
+    <sc-if value="{{ isSet }}" hint-placeholder-val="{{ false }}">
+    <div style="padding:14px 20px 20px;">
+      <h2 style="font:700 26px 'Hanken Grotesk';margin:0 0 14px;letter-spacing:-.02em;color:#26231F;">Ayarlar</h2>
+      <div style="display:flex;gap:12px;align-items:center;background:#E4F1ED;border-radius:14px;padding:14px;margin-bottom:16px;">
+        <div style="width:40px;height:40px;border-radius:11px;background:#2C7D6D;display:flex;align-items:center;justify-content:center;flex:0 0 auto;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path d="M12 3l7 3v5c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6z" stroke-linejoin="round"/></svg></div>
+        <div><div style="font:700 14px 'Hanken Grotesk';color:#1F5E50;">Uçtan uca şifreli · Yerel</div><div style="font:500 12px 'Hanken Grotesk';color:#3C7C6D;">Verilerin bu cihazdan çıkmıyor</div></div>
+      </div>
+      <div style="background:#fff;border:1px solid #E6E2DA;border-radius:14px;overflow:hidden;">
+        <div onClick="{{ toggleFaceId }}" style="display:flex;align-items:center;justify-content:space-between;padding:15px 14px;border-bottom:1px solid #F1EFEA;cursor:pointer;">
+          <span style="font:500 15px 'Hanken Grotesk';color:#26231F;">Face ID ile aç</span>
+          <div style="width:46px;height:28px;border-radius:14px;background:{{ faceIdBg }};position:relative;transition:background .2s;"><i style="position:absolute;top:3px;left:{{ faceIdX }};width:22px;height:22px;border-radius:50%;background:#fff;transition:left .2s;"></i></div>
+        </div>
+        <div onClick="{{ toggleStrike }}" style="display:flex;align-items:center;justify-content:space-between;padding:15px 14px;cursor:pointer;">
+          <div><div style="font:500 15px 'Hanken Grotesk';color:#26231F;">Tamamlanan görevler</div><div style="font:400 12px 'Hanken Grotesk';color:#8A837A;">{{ strikeLabel }}</div></div>
+          <div style="width:46px;height:28px;border-radius:14px;background:{{ strikeBg }};position:relative;transition:background .2s;"><i style="position:absolute;top:3px;left:{{ strikeX }};width:22px;height:22px;border-radius:50%;background:#fff;transition:left .2s;"></i></div>
+        </div>
+      </div>
+      <div style="font:400 12px 'Hanken Grotesk';color:#A79F94;text-align:center;margin-top:14px;">Bu bir tıklanabilir prototip · ayarlar Bugün ekranına yansır</div>
+    </div>
+    </sc-if>
+  </div>
+
+  <!-- ========== BOTTOM NAV ========== -->
+  <div style="position:absolute;left:0;right:0;bottom:0;height:82px;background:rgba(250,249,246,.94);backdrop-filter:blur(12px);border-top:1px solid #E6E2DA;display:flex;align-items:flex-start;justify-content:space-around;padding:12px 20px 0;">
+    <button data-tab="today" onClick="{{ setTab }}" style="border:none;background:none;display:flex;flex-direction:column;align-items:center;gap:4px;color:{{ colToday }};"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h10"/></svg><span style="font:600 10px 'Hanken Grotesk';">Bugün</span></button>
+    <button data-tab="cal" onClick="{{ setTab }}" style="border:none;background:none;display:flex;flex-direction:column;align-items:center;gap:4px;color:{{ colCal }};"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="5" width="16" height="16" rx="3"/><path d="M4 9h16M8 3v4M16 3v4" stroke-linecap="round"/></svg><span style="font:600 10px 'Hanken Grotesk';">Takvim</span></button>
+    <button onClick="{{ openSheet }}" style="border:none;width:52px;height:52px;border-radius:16px;background:#2C7D6D;box-shadow:0 8px 18px -6px rgba(44,125,109,.6);display:flex;align-items:center;justify-content:center;margin-top:-6px;"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></button>
+    <button data-tab="pool" onClick="{{ setTab }}" style="border:none;background:none;display:flex;flex-direction:column;align-items:center;gap:4px;color:{{ colPool }};"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M4 13l2-8h12l2 8M4 13h5l1 3h4l1-3h5M4 13v5a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5"/></svg><span style="font:600 10px 'Hanken Grotesk';">Havuz</span></button>
+    <button data-tab="set" onClick="{{ setTab }}" style="border:none;background:none;display:flex;flex-direction:column;align-items:center;gap:4px;color:{{ colSet }};"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 8h14M5 16h14"/><circle cx="9" cy="8" r="2.4" fill="#FAF9F6"/><circle cx="15" cy="16" r="2.4" fill="#FAF9F6"/></svg><span style="font:600 10px 'Hanken Grotesk';">Ayarlar</span></button>
+  </div>
+
+  <!-- ========== ADD SHEET ========== -->
+  <sc-if value="{{ sheetOpen }}" hint-placeholder-val="{{ false }}">
+    <div onClick="{{ closeSheet }}" style="position:absolute;inset:0;background:rgba(27,24,21,.42);animation:fade .18s ease;"></div>
+    <div style="position:absolute;left:0;right:0;bottom:0;background:#FAF9F6;border-radius:26px 26px 0 0;padding:12px 22px 26px;box-shadow:0 -12px 40px -12px rgba(0,0,0,.3);animation:sheetUp .24s cubic-bezier(.2,.8,.2,1);">
+      <div style="width:38px;height:5px;border-radius:3px;background:#D8D3C9;margin:2px auto 16px;"></div>
+      <div style="background:#fff;border:1.5px solid #2C7D6D;border-radius:14px;padding:14px;box-shadow:0 0 0 3px rgba(44,125,109,.12);">
+        <input value="{{ newText }}" onInput="{{ onType }}" placeholder="Ne yapman gerek? Örn: yarın 15:00 rapor gönder" style="width:100%;border:none;outline:none;background:none;font:500 16px 'Hanken Grotesk';color:#26231F;" />
+        <div style="display:flex;gap:6px;margin-top:12px;flex-wrap:wrap;">
+          <span style="font:600 12px 'Hanken Grotesk';color:#2C7D6D;background:#E4F1ED;border-radius:7px;padding:5px 9px;">📅 Bugün</span>
+          <span style="font:600 12px 'Hanken Grotesk';color:#2C7D6D;background:#E4F1ED;border-radius:7px;padding:5px 9px;">iş</span>
+          <span style="font:500 12px 'Hanken Grotesk';color:#8A837A;padding:5px 4px;">algılandı — düzenleyebilirsin</span>
+        </div>
+      </div>
+      <div style="font:600 12px 'IBM Plex Mono';color:#A79F94;letter-spacing:.06em;margin:20px 2px 8px;">ÖNCELİK</div>
+      <div style="display:flex;gap:7px;">
+        <button data-p="high" onClick="{{ setPri }}" style="flex:1;border:1.5px solid {{ priHighBorder }};background:#fff;border-radius:10px;padding:9px 0;font:600 13px 'Hanken Grotesk';color:#26231F;display:flex;align-items:center;justify-content:center;gap:6px;"><i style="width:7px;height:7px;border-radius:50%;background:#B4442F;"></i>Yüksek</button>
+        <button data-p="med" onClick="{{ setPri }}" style="flex:1;border:1.5px solid {{ priMedBorder }};background:#fff;border-radius:10px;padding:9px 0;font:600 13px 'Hanken Grotesk';color:#26231F;display:flex;align-items:center;justify-content:center;gap:6px;"><i style="width:7px;height:7px;border-radius:50%;background:#B7791F;"></i>Orta</button>
+        <button data-p="low" onClick="{{ setPri }}" style="flex:1;border:1.5px solid {{ priLowBorder }};background:#fff;border-radius:10px;padding:9px 0;font:600 13px 'Hanken Grotesk';color:#26231F;display:flex;align-items:center;justify-content:center;gap:6px;"><i style="width:7px;height:7px;border-radius:50%;background:#9C958B;"></i>Düşük</button>
+      </div>
+      <button onClick="{{ addTask }}" style="width:100%;height:52px;border:none;border-radius:14px;background:{{ addBg }};color:#fff;font:700 16px 'Hanken Grotesk';margin-top:16px;">Ekle</button>
+    </div>
+  </sc-if>
+
+  <!-- ========== DETAIL OVERLAY ========== -->
+  <sc-if value="{{ detailOpen }}" hint-placeholder-val="{{ false }}">
+    <div style="position:absolute;inset:0;background:#FAF9F6;animation:fade .18s ease;display:flex;flex-direction:column;">
+      <div style="display:flex;align-items:center;justify-content:space-between;padding:16px 18px 0;">
+        <button onClick="{{ closeDetail }}" style="width:40px;height:40px;border-radius:11px;background:#fff;border:1px solid #E6E2DA;display:flex;align-items:center;justify-content:center;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#6A645C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg></button>
+        <span style="font:500 12px 'IBM Plex Mono';color:#8A837A;">GÖREV</span>
+      </div>
+      <div style="padding:16px 22px;flex:1;overflow-y:auto;">
+        <div style="display:flex;gap:8px;align-items:center;margin-bottom:12px;"><span style="display:inline-flex;align-items:center;gap:5px;font:600 12px 'Hanken Grotesk';color:#B4442F;background:#F6E3DD;border-radius:7px;padding:4px 9px;"><i style="width:6px;height:6px;border-radius:50%;background:{{ detailPriCol }};"></i>{{ detailPriLabel }}</span><span style="font:500 12px 'Hanken Grotesk';color:#2C7D6D;background:#E4F1ED;border-radius:7px;padding:4px 9px;">{{ detailTag }}</span></div>
+        <h2 style="font:700 24px/1.2 'Hanken Grotesk';margin:0 0 14px;color:#26231F;">{{ detailTitle }}</h2>
+        <p style="font:400 14.5px/1.55 'Hanken Grotesk';color:#4A453E;margin:0 0 16px;background:#fff;border:1px solid #E6E2DA;border-radius:12px;padding:13px;">Q3 hedeflerini ve kapasiteyi ekibe özetle. Riskleri kırmızı ile işaretle.</p>
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;"><span style="font:600 13px 'Hanken Grotesk';color:#26231F;">Alt görevler</span><span style="font:600 12px 'IBM Plex Mono';color:#2C7D6D;">{{ subDone }} / {{ subTotal }}</span></div>
+        <div style="height:6px;border-radius:3px;background:#EDEAE3;overflow:hidden;margin-bottom:12px;"><div style="width:{{ subPct }};height:100%;background:#2C7D6D;transition:width .25s;"></div></div>
+        <sc-for list="{{ subtasks }}" as="s" hint-placeholder-count="4">
+          <div data-sid="{{ s.id }}" onClick="{{ toggleSub }}" style="display:flex;gap:11px;align-items:center;padding:10px 2px;cursor:pointer;"><div style="width:20px;height:20px;border-radius:6px;flex:0 0 auto;background:{{ s.bg }};border:2px solid {{ s.border }};display:flex;align-items:center;justify-content:center;"><span style="display:{{ s.checkShow }};"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l4.5 4.5L19 7"/></svg></span></div><span style="font:500 14px 'Hanken Grotesk';color:{{ s.col }};text-decoration:{{ s.strike }};">{{ s.title }}</span></div>
+        </sc-for>
+      </div>
+      <div style="padding:14px 18px 24px;display:flex;gap:9px;border-top:1px solid #EDEAE3;">
+        <button onClick="{{ completeFromDetail }}" style="flex:1;height:50px;border:none;border-radius:13px;background:#2C7D6D;color:#fff;font:700 15px 'Hanken Grotesk';display:flex;align-items:center;justify-content:center;gap:7px;"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l4.5 4.5L19 7"/></svg>Tamamla</button>
+        <button onClick="{{ closeDetail }}" style="width:52px;height:50px;border:1px solid #E6E2DA;border-radius:13px;background:#fff;display:flex;align-items:center;justify-content:center;"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#6A645C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 8h14l-1 12H6z"/><path d="M9 8V5h6v3"/></svg></button>
+      </div>
+    </div>
+  </sc-if>
+
+  <!-- ========== TOAST ========== -->
+  <sc-if value="{{ toastShow }}" hint-placeholder-val="{{ false }}">
+    <div style="position:absolute;left:20px;right:20px;bottom:96px;display:flex;align-items:center;gap:11px;background:#26231F;border-radius:12px;padding:12px 14px;animation:fade .2s ease;box-shadow:0 10px 30px -8px rgba(0,0,0,.4);">
+      <div style="width:22px;height:22px;border-radius:50%;background:#4FB39A;flex:0 0 auto;display:flex;align-items:center;justify-content:center;"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#08221B" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l4.5 4.5L19 7"/></svg></div>
+      <span style="font:500 13px 'Hanken Grotesk';color:#F4F2ED;flex:1;">{{ toastText }}</span>
+    </div>
+  </sc-if>
+
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = {
+    tab: 'today',
+    tasks: [
+      { id:'t1', title:'Sprint planını gönder', time:'09:00–09:30', tag:'iş', pri:'high', done:false, timed:true },
+      { id:'t2', title:'Vergi belgesini yükle', time:'', tag:'deadline', pri:'med', done:false, timed:false },
+      { id:'t3', title:'30 dk yürüyüş', time:'', tag:'sağlık', pri:'low', done:false, timed:false },
+      { id:'t4', title:'Sabah e-postaları', time:'', tag:'iş', pri:'low', done:true, timed:false },
+    ],
+    pool: [
+      { id:'p1', title:'Portföyü güncelle', tag:'iş', pri:'high' },
+      { id:'p2', title:'Kitap önerilerini derle', tag:'kişisel', pri:'med' },
+      { id:'p3', title:'Blog fikri: offline-first', tag:'fikir', pri:'low' },
+    ],
+    sheetOpen:false, newText:'', newPri:'high',
+    detailId:null,
+    subtasks:[
+      { id:'s1', title:'Kapasite tablosunu güncelle', done:true },
+      { id:'s2', title:'Riskleri listele', done:true },
+      { id:'s3', title:'Slaytları hazırla', done:false },
+      { id:'s4', title:'Ekibe gönder', done:false },
+    ],
+    faceId:true, strikeMode:true,
+    selDay:4,
+    toast:null,
+  };
+
+  priColor(p){ return p==='high' ? '#B4442F' : p==='med' ? '#B7791F' : '#9C958B'; }
+
+  flash(msg){
+    this.setState({ toast: msg });
+    clearTimeout(this._t);
+    this._t = setTimeout(()=> this.setState({ toast:null }), 2200);
+  }
+
+  renderVals(){
+    const s = this.state;
+    const strike = s.strikeMode;
+    const mkTask = (t) => ({
+      id:t.id, title:t.title, time:t.time, tag:t.tag,
+      priCol: this.priColor(t.pri),
+      timeShow: t.timed ? 'inline-block' : 'none',
+      done:t.done,
+      boxBg: t.done ? '#2C7D6D' : 'transparent',
+      boxBorder: t.done ? '#2C7D6D' : '#CFC8BC',
+      checkShow: t.done ? 'inline-flex' : 'none',
+      titleCol: t.done ? '#8A837A' : '#26231F',
+      strike: (t.done && strike) ? 'line-through' : 'none',
+      borderCol: (t.pri==='med' && !t.done) ? '#F0D9CF' : '#E6E2DA',
+    });
+    // hide completed entirely if strikeMode is off
+    const visibleToday = strike ? s.tasks : s.tasks.filter(t=>!t.done);
+    const todayTasks = visibleToday.map(mkTask);
+
+    const detail = s.tasks.find(t=>t.id===s.detailId) || null;
+    const subDone = s.subtasks.filter(x=>x.done).length;
+    const subs = s.subtasks.map(x=>({
+      id:x.id, title:x.title,
+      bg: x.done ? '#2C7D6D' : 'transparent',
+      border: x.done ? '#2C7D6D' : '#CFC8BC',
+      checkShow: x.done ? 'inline-flex':'none',
+      col: x.done ? '#8A837A' : '#26231F',
+      strike: x.done ? 'line-through':'none',
+    }));
+
+    // calendar days (Jul 2026, Mon-first, leading June 29-30)
+    const dotMap = { 3:'#2C7D6D',6:'#B4442F',8:'#2C7D6D',10:'#2C7D6D',13:'#2C7D6D',15:'#B7791F',20:'#2C7D6D',23:'#2C7D6D',28:'#2C7D6D',31:'#2C7D6D' };
+    const cal = [];
+    cal.push({n:29,muted:true},{n:30,muted:true});
+    for(let n=1;n<=31;n++) cal.push({n});
+    cal.push({n:1,muted:true,tail:true},{n:2,muted:true,tail:true});
+    const calDays = cal.map(d=>{
+      const sel = d.n===s.selDay && !d.muted;
+      return {
+        n:d.n,
+        bg: sel ? '#2C7D6D' : 'transparent',
+        col: sel ? '#fff' : d.muted ? '#C0B9AD' : '#26231F',
+        weight: sel ? 700 : 500,
+        dot: sel ? '#BFE3D8' : (dotMap[d.n]||'#CFC8BC'),
+        dotShow: (!d.muted && dotMap[d.n]) ? 'block' : (sel ? 'block':'none'),
+      };
+    });
+    const monthNames = ['Ocak','Şubat','Mart','Nisan','Mayıs','Haziran','Temmuz','Ağustos','Eylül','Ekim','Kasım','Aralık'];
+    const wd = ['Pazar','Pazartesi','Salı','Çarşamba','Perşembe','Cuma','Cumartesi'];
+    const dateObj = new Date(2026,6,s.selDay);
+
+    return {
+      // tab flags
+      isToday: s.tab==='today', isCal: s.tab==='cal', isPool: s.tab==='pool', isSet: s.tab==='set',
+      colToday: s.tab==='today'?'#2C7D6D':'#A79F94',
+      colCal: s.tab==='cal'?'#2C7D6D':'#A79F94',
+      colPool: s.tab==='pool'?'#2C7D6D':'#A79F94',
+      colSet: s.tab==='set'?'#2C7D6D':'#A79F94',
+      setTab: (e)=> this.setState({ tab: e.currentTarget.dataset.tab }),
+
+      // today
+      todayTasks,
+      doneCount: s.tasks.filter(t=>t.done).length,
+      totalCount: s.tasks.length,
+      routineCount: 3,
+      toggleTask: (e)=>{ e.stopPropagation(); const id=e.currentTarget.dataset.id;
+        this.setState({ tasks: s.tasks.map(t=> t.id===id ? {...t, done:!t.done} : t) });
+        const t = s.tasks.find(x=>x.id===id); if(t && !t.done) this.flash('Görev tamamlandı');
+      },
+      openRow: (e)=>{ const id=e.currentTarget.dataset.id; this.setState({ detailId:id }); },
+
+      // detail
+      detailOpen: !!detail,
+      detailTitle: detail? detail.title : '',
+      detailTag: detail? detail.tag : '',
+      detailPriCol: detail? this.priColor(detail.pri):'#B4442F',
+      detailPriLabel: detail ? (detail.pri==='high'?'Yüksek öncelik':detail.pri==='med'?'Orta öncelik':'Düşük öncelik') : '',
+      subtasks: subs, subDone, subTotal: s.subtasks.length,
+      subPct: Math.round(subDone/s.subtasks.length*100)+'%',
+      toggleSub: (e)=>{ const id=e.currentTarget.dataset.sid;
+        this.setState({ subtasks: s.subtasks.map(x=> x.id===id?{...x,done:!x.done}:x) }); },
+      closeDetail: ()=> this.setState({ detailId:null }),
+      completeFromDetail: ()=>{ const id=s.detailId;
+        this.setState({ tasks: s.tasks.map(t=> t.id===id?{...t,done:true}:t), detailId:null });
+        this.flash('Görev tamamlandı'); },
+
+      // pool
+      poolTasks: s.pool.map(p=>({ id:p.id, title:p.title, tag:p.tag, priCol:this.priColor(p.pri) })),
+      poolCount: s.pool.length,
+      poolEmptyShow: s.pool.length? 'none':'block',
+      pullToToday: (e)=>{ const id=e.currentTarget.dataset.id; const p=s.pool.find(x=>x.id===id); if(!p) return;
+        this.setState({
+          pool: s.pool.filter(x=>x.id!==id),
+          tasks: [...s.tasks, { id:'n'+Date.now(), title:p.title, time:'', tag:p.tag, pri:p.pri, done:false, timed:false }],
+        });
+        this.flash('“'+p.title+'” bugüne eklendi'); },
+
+      // sheet
+      sheetOpen: s.sheetOpen,
+      newText: s.newText,
+      openSheet: ()=> this.setState({ sheetOpen:true, newText:'', newPri:'high' }),
+      closeSheet: ()=> this.setState({ sheetOpen:false }),
+      onType: (e)=> this.setState({ newText: e.target.value }),
+      setPri: (e)=> this.setState({ newPri: e.currentTarget.dataset.p }),
+      priHighBorder: s.newPri==='high'?'#2C7D6D':'#E6E2DA',
+      priMedBorder: s.newPri==='med'?'#2C7D6D':'#E6E2DA',
+      priLowBorder: s.newPri==='low'?'#2C7D6D':'#E6E2DA',
+      addBg: s.newText.trim()? '#2C7D6D':'#B7C9C2',
+      addTask: ()=>{ const txt=s.newText.trim(); if(!txt) return;
+        this.setState({
+          tasks:[{ id:'n'+Date.now(), title:txt, time:'', tag:'iş', pri:s.newPri, done:false, timed:false }, ...s.tasks],
+          sheetOpen:false, newText:'', tab:'today',
+        });
+        this.flash('Görev eklendi'); },
+
+      // settings toggles
+      faceIdBg: s.faceId?'#2C7D6D':'#CFC8BC', faceIdX: s.faceId?'21px':'3px',
+      toggleFaceId: ()=> this.setState({ faceId:!s.faceId }),
+      strikeBg: s.strikeMode?'#2C7D6D':'#CFC8BC', strikeX: s.strikeMode?'21px':'3px',
+      strikeLabel: s.strikeMode?'Üstü çizili göster':'Listeden gizle',
+      toggleStrike: ()=> this.setState({ strikeMode:!s.strikeMode }),
+
+      // calendar
+      calDays,
+      selectDay: (e)=> this.setState({ selDay: parseInt(e.currentTarget.dataset.day,10) }),
+      selDayLabel: s.selDay + ' ' + monthNames[6] + ', ' + wd[dateObj.getDay()],
+
+      // toast
+      toastShow: !!s.toast, toastText: s.toast || '',
+    };
+  }
+}
+</script>
+</body>
+</html>
