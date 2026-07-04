@@ -34,7 +34,8 @@ Bu dosyalar disinda ek varsayim yapilmamalidir. PRD'de olmayan buyuk ozellikler 
 ### MVP - Detayli tasarlanacak
 
 - Bireysel kullanici.
-- Mobil oncelikli cok platformlu uygulama.
+- Mobil oncelikli Android+iOS uygulama.
+- PC/desktop ve web resmi MVP yayin hedefi degildir; tasarim omurgasi bu hedeflere ileride engel olmayacak sekilde korunur.
 - Yerel sifreli kasa / E2EE prensibi.
 - Offline kullanilabilir gorev yonetimi.
 - Gorev CRUD, alt gorevler, zamanlama, tekrar, deadline, zamansiz havuz.
@@ -132,7 +133,7 @@ Sadece dar MVP ekranları üretme. Önce free-task’in tüm fazlara dayanacak g
 
 Tasarım öncelikleri:
 - Bu bir landing page veya marketing sitesi değil; gerçek kullanılabilir görev/rutin yönetimi uygulaması olacak.
-- Mobil öncelikli düşün, ama genel tasarım omurgası desktop/web genişlemesine de engel olmasın.
+- Mobil öncelikli düşün. PC/desktop ve web resmi MVP release hedefi değil; ancak genel tasarım omurgası desktop/web genişlemesine engel olmasın.
 - Sade, hızlı, dikkat dağıtmayan üretkenlik aracı hissi ver.
 - Offline kullanılabilirlik hissi net olmalı.
 - E2EE / yerel şifreli kasa güven hissi vermeli ama kullanıcıyı korkutmamalı.
@@ -248,7 +249,7 @@ Light ve dark tema için:
 10. Flutter uygulanabilirlik ve erişilebilirlik kontrolü
 - Flutter ile uygulanması zor veya riskli olabilecek UI kararlarını işaretle.
 - Ekran okuyucu, kontrast, büyük metin, tek elle kullanım ve erişilebilirlik notlarını ekle.
-- Mobile-first tasarımın desktop/web’e nasıl uyarlanabileceğini kısaca belirt.
+- Mobile-first tasarımın desktop/web’e nasıl uyarlanabileceğini kısaca belirt; bunu resmi MVP PC release kapsamı gibi sunma.
 
 11. Repo çıktısı
 Eğer repo içinde dosya oluşturabiliyorsan sonucu şuraya yaz:

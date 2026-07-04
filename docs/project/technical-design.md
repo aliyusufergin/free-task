@@ -9,6 +9,7 @@
 | Kaynak dokumanlar | `docs/project/prd.md`, `docs/project/ux-flows.md`, `docs/design/claude-v1/design-summary.md` |
 | Tasarim paketi | `docs/design/claude-v1/screens/`, `docs/design/claude-v1/flutter/free_task_theme.dart`, prototip `.dc.html` dosyalari |
 | MVP platformlari | Android + iOS es zamanli |
+| PC/desktop uyumlulugu | Resmi MVP release degil; mimari/tasarim uyumu korunur, scaffold sonrasi desktop/web smoke build denenir |
 | UI dilleri | Turkce + Ingilizce |
 | MVP guvenlik modeli | Parola + biyometrik + kurtarma anahtari, yerel sifreli kasa |
 | MVP bildirim karari | Cihaz ici local notifications, opt-in |
@@ -76,6 +77,7 @@ Temel prensip:
 | --- | --- | --- | --- | --- |
 | Uygulama framework'u | Flutter + Dart | React Native, Kotlin Multiplatform, native Android+iOS | Android+iOS es zamanli hedef, guclu UI kontrolu, ileride desktop/web opsiyonu | https://docs.flutter.dev/ |
 | Mobil platformlar | Android + iOS es zamanli | Android once, iOS sonra | Kullanici karari ve tasarim platform paritesi | https://docs.flutter.dev/reference/supported-platforms |
+| PC/desktop ve web | Uyumluluk korunur; resmi MVP release degil | MVP'de tam desktop/web hedefi, native desktop app | Flutter proje yapisi, responsive layout ve paket secimleri ileride PC destegini engellememeli; erken smoke build ile risk izlenir | https://docs.flutter.dev/reference/supported-platforms |
 | Mimari | Feature-first layered architecture | Tek katmanli Flutter app, katı clean architecture | Offline, E2EE, import/export, sync ve AI icin test edilebilir sinirlar gerekir | https://docs.flutter.dev/app-architecture/guide |
 | State management | Riverpod aday standart | Provider, Bloc, ChangeNotifier | Repository/use-case ayrimini test edilebilir yapar; MVP'de codegen zorunlu degil | https://riverpod.dev/docs/introduction/getting_started |
 | Yerel veri | SQLCipher ile sifreli SQLite | Hive/Isar, plaintext SQLite, dosya tabanli JSON | Iliskili gorev/alt gorev/tekrar modeli ve sifreli local vault ihtiyaci | https://www.zetetic.net/sqlcipher/ |
@@ -278,6 +280,7 @@ KDF parametreleri, platform destegi ve performans teknik spike gerektirir. Varsa
 | Environment | Amac | Not |
 | --- | --- | --- |
 | Local dev | Gelistirme ve test | Flutter SDK, Android emulator, iOS simulator |
+| Desktop/web smoke | Uyumluluk kontrolu | Resmi MVP release degil; scaffold sonrasi Flutter desktop/web build denenir |
 | Device dogfooding | Gercek cihaz testleri | Android + iOS es zamanli |
 | Internal/Beta | Sinirli paylasim | Android internal testing, iOS TestFlight |
 | Production | Gelecek | Store yayin karari launch planinda |
@@ -328,6 +331,7 @@ Flutter performans notlari:
 | Kurtarma anahtari UX'i | Veri kaybi veya onboarding surtunmesi | Zorunlu dogrulama mi risk onayli erteleme mi karar ver |
 | Iki dilli copy | UI tasarim paritesi | ARB key sistemi ve uzun metin testleri |
 | Local notifications platform farklari | Android/iOS davranis sapmasi | Platform izinleri ve timezone testleri |
+| Desktop/web paket paritesi | Ileride PC destegi gecikebilir | MVP kapsamını buyutmeden scaffold sonrasi smoke build ve plugin uyumluluk notu tut |
 | Riverpod/codegen karmasikligi | Baslangic hizi | MVP'de codegen opsiyonel; once basit provider yapisi |
 | Faz 2/3 tablolarini erken eklemek | MVP sisirme | Migration planinda reserve et, fiziksel tabloyu ihtiyac olunca ekle |
 

@@ -8,6 +8,7 @@ Basari tanimi:
 
 - Kullanici 14 gun boyunca gunluk gorev/rutin akisini veri kaybi olmadan kullanabilir.
 - Android ve iOS build'leri ayni MVP kapsamiyla calisir.
+- PC/desktop ve web resmi MVP release hedefi degildir; uyumluluk icin smoke build sonucu bilinen risk olarak kaydedilir.
 - Yerel sifreli kasa, recovery key, local notifications, import/export ve offline CRUD release blocker testlerden gecer.
 - E2EE/recovery riskleri kullaniciya net anlatilir.
 
@@ -17,6 +18,7 @@ Basari tanimi:
 | --- | --- | --- |
 | Owner/dogfooding | Lokal build, Android device, iPhone/TestFlight | Ilk hedef |
 | Teknik yakin beta kullanicilari | GitHub release veya kapali TestFlight/internal testing | E2EE ve veri kaybi uyarisi ile |
+| PC/desktop denemesi | Lokal smoke build | Resmi MVP dagitimi degil, uyumluluk kontrolu |
 | Public kullanicilar | Gelecek | MVP dogfooding basarili olmadan yok |
 
 MVP icin marketing sitesi, ucretli SaaS veya public app store buyume kampanyasi yoktur.
@@ -42,6 +44,7 @@ MVP icin marketing sitesi, ucretli SaaS veya public app store buyume kampanyasi 
 - [ ] Test plan P0 senaryolari gecti.
 - [ ] Android physical device smoke gecti.
 - [ ] iOS physical device smoke gecti.
+- [ ] PC/desktop ve web smoke build sonucu known issues'a yazildi.
 - [ ] Recovery key akisi test edildi.
 - [ ] Import/export roundtrip test edildi.
 - [ ] Local notification izin kabul/red test edildi.
@@ -107,6 +110,7 @@ MVP'de remote telemetry varsayilan kapali oldugu icin monitoring su sekilde iler
   - `security`
   - `ios`
   - `android`
+  - `desktop-web`
   - `accessibility`
   - `import-export`
 
@@ -200,6 +204,7 @@ README veya release notunda net uyarilar:
 
 - Kurulum.
 - Desteklenen platformlar.
+- PC/desktop ve web icin resmi release verilmediyse uyumluluk/smoke durumu.
 - Kapsam disi Faz 2/Faz 3 ozellikleri.
 - Privacy/E2EE notlari.
 - Known issues.
@@ -213,6 +218,7 @@ README veya release notunda net uyarilar:
 | Recovery key kaybi | Owner + kullanici | Onboarding uyarisi, dogrulama adimi |
 | SQLCipher platform sorunu | Owner | Spike ve fallback degerlendirmesi |
 | Bildirim izin/planlama farklari | Owner | Android+iOS device test |
+| PC/desktop uyumluluk beklentisi | Owner | README'de resmi MVP platformlarini ve smoke durumunu net yaz |
 | Public kullanicinin beta riskini anlamamasi | Owner | Release notu ve README uyarisi |
 | Remote telemetry eksikligi nedeniyle bug izleme zorlugu | Owner | Manual dogfooding log + diagnostic bundle |
 

@@ -7,6 +7,7 @@
 | Kaynaklar | `prd.md`, `ux-flows.md`, `technical-design.md`, `data-permissions.md`, `implementation-plan.md` |
 | Test kapsami | MVP dogfooding ve kapali beta hazirligi |
 | Platformlar | Android + iOS es zamanli |
+| PC/desktop uyumlulugu | Resmi MVP release degil; scaffold sonrasi desktop/web smoke build kontrolu |
 | Diller | Turkce + Ingilizce |
 | MVP risk alanlari | Sifreli kasa, recovery, local notifications, offline CRUD, recurrence, import/export, accessibility |
 | Kapsam disi | Faz 2 sync, Faz 3 AI/API/agent gercek entegrasyonu; yalniz disabled guard testleri |
@@ -19,8 +20,9 @@ Risk-first test yaklasimi:
 2. **Domain correctness:** Task CRUD, recurrence, reminder ve timezone testleri unit seviyesinde kapsanir.
 3. **UX vertical slice:** F1-F9 MVP akislari integration/widget testleriyle dogrulanir.
 4. **Platform parity:** Android ve iOS izin, biyometrik, dosya, bildirim davranislari manuel ve cihaz/simulator testleriyle kontrol edilir.
-5. **No data loss:** Migration, import/export, crash/restart ve offline senaryolari release blocker kabul edilir.
-6. **Accessibility and localization:** TR/EN, buyuk metin, screen reader ve kontrast release oncesi zorunludur.
+5. **PC compatibility guard:** Desktop/web resmi release kapsami degildir; scaffold sonrasi derleme smoke testi ve plugin uyumluluk notu tutulur.
+6. **No data loss:** Migration, import/export, crash/restart ve offline senaryolari release blocker kabul edilir.
+7. **Accessibility and localization:** TR/EN, buyuk metin, screen reader ve kontrast release oncesi zorunludur.
 
 ## 3. Environment ve Desteklenen Platformlar
 
@@ -31,6 +33,7 @@ Risk-first test yaklasimi:
 | Android physical device | Dogfooding | Biyometrik, local notification, dosya izinleri |
 | iOS simulator | Smoke/integration | Kasa, navigation, localization, export/import |
 | iOS physical device | Dogfooding/TestFlight | Face ID/Touch ID, local notification, background/resume |
+| Desktop/web smoke | Uyumluluk guard | Resmi release olmadan Flutter scaffold ve kritik plugin derleme uyumu |
 | Release beta | Kapali beta | Regression, migration, privacy checklist |
 
 Minimum cihaz matrisi uygulama baslarken netlestirilecek; simdilik bir guncel Android, bir dusuk/orta Android ve bir guncel iPhone hedeflenir.
@@ -48,6 +51,7 @@ Minimum cihaz matrisi uygulama baslarken netlestirilecek; simdilik bir guncel An
 | Import/export | Unit, integration, manual | JSON, Markdown, encrypted backup, import rollback | Evet |
 | Accessibility | Manual, widget semantics | Screen reader, touch target, contrast, text scale | Evet |
 | Design parity | Visual/manual | Claude screens 01-13 MVP parity | Hayir, ama beta oncesi gerekli |
+| PC/desktop smoke | Build/manual | Scaffold sonrasi desktop/web build denenir, blokajlar notlanir | Hayir, resmi MVP release degil |
 | Faz 2/3 disabled guards | Unit/integration | Sync/AI/API UI acik degil, adapter no-op | Evet |
 
 ## 5. Manual Test Cases
@@ -202,6 +206,7 @@ Her release candidate icin:
 - [ ] Tum P0 testler gecti.
 - [ ] Android physical device smoke gecti.
 - [ ] iOS physical device smoke gecti.
+- [ ] PC/desktop ve web smoke build sonucu notlandi.
 - [ ] Import/export roundtrip gecti.
 - [ ] Recovery key akisi gecti.
 - [ ] Bildirim izin reddi ve kabul akislari gecti.
@@ -218,6 +223,7 @@ Her release candidate icin:
 | SQLCipher adapter platform sorunu | MVP blokaji | Spike P0 |
 | Recovery key UX fazla surtunmeli | Onboarding terk | Dogfooding gozlemi |
 | Notification exact timing platform farki | Hatirlatici guveni | Android/iOS manual test |
+| Desktop/web plugin uyumlulugu | Ileride PC destegini geciktirebilir | Scaffold sonrasi smoke build ve risk notu |
 | Lock screen notification privacy | Hassas veri sizabilir | Varsayilan gizli metin onerilir |
 | TR/EN metin uzunlugu | UI tasmasi | Snapshot ve text scale testleri |
 | Migration veri kaybi | Kritik | Backup + rollback testleri |

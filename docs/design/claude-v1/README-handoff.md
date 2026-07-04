@@ -1,6 +1,6 @@
 # free-task — Tasarım Teslimatı (claude-v1) · Codex Handoff
 
-> **▶ CODEX: BURADAN BAŞLA.** Bu dosya tüm çıktıların giriş noktasıdır. Şu sırayla oku: (1) bu README, (2) `design-summary.md` (ana referans), (3) `docs/project/ux-flows.md` (akışlar). Sonra `$ux-flow-planner` ile başla. **PRD faz kapsamını koru.** §6'daki açık soruları **varsayımla doldurma — kullanıcıya sor.**
+> **▶ CODEX: BURADAN BAŞLA.** Bu dosya tüm çıktıların giriş noktasıdır. Şu sırayla oku: (1) bu README, (2) `design-summary.md` (ana referans), (3) `docs/project/ux-flows.md` (akışlar). Sonra `$ux-flow-planner` ile başla. **PRD faz kapsamını koru.** §6'daki kararları kaynak kabul et; yeni varsayımla MVP kapsamını büyütme.
 
 > **Kim için:** Codex (sonraki planlama/uygulama ajanı) ve insan paydaşlar.
 > **Ne:** free-task ürününün tam tasarım omurgası + MVP/Faz 2/Faz 3 ekranları + interaktif prototipler + Flutter token'ları.
@@ -73,3 +73,4 @@ Bu dört konu 2026-07-04 tarihinde kullanıcı tarafından yanıtlandı ve `docs
 2. **Yerel bildirimler:** MVP'ye dahil, opt-in ve cihaz içi local notifications.
 3. **Kurtarma/parola modeli:** Parola + biyometrik + kurtarma anahtarı.
 4. **Platform önceliği:** Android + iOS eş zamanlı.
+5. **PC/desktop uyumluluğu:** Resmi MVP release değil; mimari ve tasarım uyumluluğu korunur, scaffold sonrası desktop/web smoke build sonucu notlanır.

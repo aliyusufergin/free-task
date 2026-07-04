@@ -17,6 +17,7 @@
 - Zaman: sabit tarih yok; risk-first milestone ilerleyisi.
 - Release hedefi: once dogfooding MVP, sonra kapali beta.
 - Platform: Android + iOS es zamanli.
+- PC/desktop: resmi MVP release hedefi degil; scaffold sonrasi desktop/web smoke build ile uyumluluk korunur.
 - Dil: Turkce + Ingilizce.
 - MVP'de backend yok.
 - MVP'de remote auth, SaaS, self-host sync, AI, API ve multi-user yok.
@@ -27,7 +28,7 @@
 | Milestone | Goal | Exit Criteria | Dependencies |
 | --- | --- | --- | --- |
 | M0 Repo ve planlama temeli | Planlama artifact'lerini ve tasarim teslimatini repo icine almak | PRD, UX, tech, data, design dosyalari repo icinde | Mevcut dokumanlar |
-| M1 Flutter scaffold ve temel app shell | Android+iOS Flutter projesi, tema, localization, nav shell | App acilir, light/dark tema ve TR/EN calisir | Flutter SDK, paket kurulumu |
+| M1 Flutter scaffold ve temel app shell | Android+iOS Flutter projesi, tema, localization, nav shell | App acilir, light/dark tema ve TR/EN calisir; desktop/web smoke build denenir | Flutter SDK, paket kurulumu |
 | M2 Sifreli kasa spike | SQLCipher + key wrapping + biyometrik + recovery key doğrulama | Android+iOS cihaz/simulator uzerinde kasa ac/kapat/migrate smoke test | M1 |
 | M3 Core data ve task domain | Task, subtask, recurrence, reminder, preference schema/repository | Unit testlerle CRUD ve recurrence geciyor | M2 |
 | M4 MVP UI vertical slice | Kasa kurulumu -> Bugun -> gorev ekle -> tamamla akisi | Tek kullanici gercek gunluk akisi calisir | M1-M3 |
@@ -54,6 +55,7 @@
 | SET-02 | Flutter | `apps/free_task_flutter/` scaffold | Tech §2 | SET-01 | Android/iOS app smoke run |
 | SET-03 | Flutter | Dependency policy ve `pubspec.yaml` | Tech §4 | SET-02 | Lockfile commit'e hazir |
 | SET-04 | CI | Format/analyze/test workflow taslagi | Tech §10 | SET-02 | Local komutlar ve GitHub Actions taslagi |
+| SET-05 | Flutter | Desktop/web smoke build kontrolu | Tech §4/10 | SET-02 | Resmi release hedefi olmadan PC/web derleme riski notlanir |
 | DES-01 | Design | Claude tokenlarini app theme'e entegre et | Design summary §9 | SET-02 | Light/dark tema calisir |
 | DES-02 | i18n | `app_tr.arb`, `app_en.arb`, locale switch | UX §2 | SET-02 | Dil runtime degisir |
 | SEC-01 | Vault | SQLCipher spike | Tech §7 | SET-02 | Encrypted DB Android+iOS ac/kapat |
@@ -116,10 +118,12 @@ Sprint hedefi: en yuksek teknik riskleri erken kapatmak.
 6. SEC-02: KDF/key wrapping spike.
 7. SEC-03: Biyometrik unlock spike.
 8. NOT-01: Local notification permission smoke test.
+9. SET-05: Desktop/web smoke build kontrolu.
 
 Sprint cikisi:
 
 - Android+iOS'ta acilan bos ama temali app.
+- PC/desktop ve web icin resmi release olmadan derleme uyumu hakkinda ilk risk notu.
 - Kasa spike'i kanitlanmis.
 - Dil ve tema degistirme calisir.
 - Bildirim izni davranisi platformlarda gorulmus.
@@ -130,11 +134,12 @@ Oncelik sirasi:
 
 1. SQLCipher ve key management.
 2. Android+iOS local notification farklari.
-3. TR/EN localization ve text overflow.
-4. Recurrence/timezone hesaplari.
-5. Import/export rollback.
-6. Accessibility ve buyuk metin.
-7. UI polish.
+3. Desktop/web derleme uyumlulugu smoke kontrolu.
+4. TR/EN localization ve text overflow.
+5. Recurrence/timezone hesaplari.
+6. Import/export rollback.
+7. Accessibility ve buyuk metin.
+8. UI polish.
 
 Bu siralama, once veri kaybi ve platform blokajlarini azaltir.
 
@@ -159,6 +164,7 @@ Engineering gorevleri milestone tablosundaki SET/SEC/DAT/UI/NOT/IMP/STA/FUT task
 - Widget tests: kasa kurulumu, bugun listesi, yeni gorev, ayarlar.
 - Integration tests: F1-F9 MVP akislari.
 - Manual tests: Android/iOS bildirim izinleri, biyometrik fallback, dosya export/import.
+- Desktop/web smoke: resmi release kapsamına almadan scaffold ve plugin uyumlulugu kontrolu.
 - Accessibility: screen reader, buyuk metin, kontrast.
 - Release: Android internal testing, iOS TestFlight, dogfooding checklist.
 

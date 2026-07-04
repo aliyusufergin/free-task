@@ -22,6 +22,7 @@ Bu dokuman Claude tasarim teslimatindaki `docs/project/ux-flows.md` taslagini do
 | Yerel bildirimler | MVP'ye dahil | Hatirlaticilar tamamen cihaz ici ve opt-in olur. Bildirim izni reddedilirse gorev akislari kilitlenmez; uygulama icinde deadline/rutin uyarilari devam eder. |
 | Kurtarma/parola modeli | Parola + biyometrik + kurtarma anahtari | Ilk kurulumda parola zorunlu, biyometrik opsiyonel, kurtarma anahtari zorunlu onay adimi olarak tasarlanir. Kurtarma anahtari kaydedilmeden onboarding tamamlanmaz veya kullanici riski acikca onaylar. |
 | Platform onceligi | Android + iOS es zamanli | UX, platform paritesiyle tasarlanir. Biyometrik kopya platforma gore "Face ID / Touch ID / Biyometrik" olur; bildirim izni, dosya secici ve paylasim sheet'i iki platformda dogrulanir. |
+| PC/desktop uyumlulugu | Resmi MVP build hedefi degil; tasarim uyumu korunur | Mobil akislari bozmayacak sekilde desktop/web adaptasyon notlari tutulur. Alt bar -> sol rail, bottom sheet -> sag panel gibi uyarlamalar sonraki PC fazina hazirliktir. |
 
 ## 3. Tasarim Paketi Bulgulari
 
@@ -448,7 +449,7 @@ Istatistik MVP'de ayri alt bar sekmesi degildir; Bugun ust barindaki ikon ve oze
 - Light/dark tema WCAG AA kontrast hedefini korur.
 - Android ve iOS icin sistem izin akislari ayri test edilir.
 - Local bildirimler izin reddinde alternatif uygulama ici uyariyla desteklenir.
-- Desktop/web genislemesinde alt bar sol rail'e, bottom sheet sag panele donusebilir.
+- Desktop/web genislemesinde alt bar sol rail'e, bottom sheet sag panele donusebilir; bu MVP'de resmi PC release taahhudu degil, uyumluluk kuralidir.
 
 ## 14. UX Riskleri ve Oneriler
 
@@ -469,13 +470,14 @@ Bu turda README §6 sorulari cevaplandi ve dokumana islenmistir. Kalan UX sorula
 - Parola minimum guvenlik esigi ne olacak?
 - Yerel bildirimlerde varsayilan sessiz saatler olacak mi?
 - Iki dilli ilk surumda uygulama ici metinlerin kaynak dili Turkce mi Ingilizce mi tutulacak?
-- Desktop/web genislemesi MVP build kapsamina girecek mi, yoksa sadece tasarim uyumu mu korunacak?
+- PC/desktop resmi MVP build hedefi degil; sadece tasarim/mimari uyumu korunacak ve teknik smoke test yapilacak.
 
 ## 16. Teknik Tasarima Handoff
 
 `$technical-design` asagidaki UX kararlarini baglayici girdi olarak almalıdır:
 
 - Platform: Android + iOS es zamanli, Flutter/Dart aday stack.
+- PC/desktop: resmi MVP release degil; responsive tasarim uyumu korunur, desktop/web smoke test teknik plana devredilir.
 - UI dili: Turkce + Ingilizce, runtime dil degistirme ve sistem dili varsayilani.
 - Local notification: MVP'de opt-in, cihaz ici, uzaktan push yok.
 - Kasa modeli: parola + opsiyonel biyometrik + kurtarma anahtari.

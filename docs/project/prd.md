@@ -58,6 +58,7 @@ Kisisel uretkenlik araclari yaygin olsa da gizlilik, yerel calisma, acik kaynak/
 - MVP'de liderlik tablosu veya rekabet odakli oyunlastirma yapmak.
 - MVP'de public marketing sitesi, odeme sistemi veya buyume hunisi kurmak.
 - MVP'de webhooks, public API veya GraphQL/REST platformu sunmak.
+- MVP'de resmi PC/desktop veya web yayini taahhut etmek.
 
 ## 6. Kullanicilar, Personalar ve Roller
 
@@ -86,13 +87,13 @@ Kisisel uretkenlik araclari yaygin olsa da gizlilik, yerel calisma, acik kaynak/
 
 - Ton: sade, hizli, dikkat dagitmayan uretkenlik araci.
 - Ozellestirme: MVP'de light/dark tema ve temel gorunum tercihleri; topluluk temalari ve ileri tema sistemi sonraki faz.
-- Platform onceligi: mobil cihazlarda rahat kullanim. Masaustu ve web hedefleri teknik tasarimda dogrulanacak, ancak MVP tasarimi mobil oncelikli olacak.
+- Platform onceligi: Android + iOS mobil kullanim. PC/desktop ve web resmi MVP yayin hedefi degildir; ancak Flutter tabanli mimari ve responsive tasarim bu hedeflere ileride engel olmayacak sekilde korunur. Uygulama baslangicinda desktop/web derleme uyumu smoke test seviyesinde dogrulanir.
 
 ## 8. Kapsam
 
 ### MVP Kapsami
 
-1. Mobil oncelikli cok platformlu uygulama temeli.
+1. Mobil oncelikli Android+iOS uygulama temeli; PC/desktop ve web icin mimari/tasarim uyumlulugu korunur.
 2. Yerel, sifreli veri deposu.
 3. Offline kullanilabilir cekirdek gorev yonetimi.
 4. Gorev CRUD: ekleme, duzenleme, silme, arsivleme.
@@ -275,7 +276,7 @@ Kisisel uretkenlik araclari yaygin olsa da gizlilik, yerel calisma, acik kaynak/
 - Kontrast light/dark modda okunabilir olmalı.
 - Swipe aksiyonlarinin buton alternatifi bulunmalı.
 - Dinamik saat/tarih secimi ekran okuyucu ile kullanilabilir olmalı.
-- Masaustu/web gorunumleri teknik olarak hedeflense de MVP UX kararlarinda mobil oncelik korunur.
+- PC/desktop ve web gorunumleri teknik olarak smoke seviyesinde dogrulansa da MVP UX kararlarinda mobil oncelik korunur.
 
 ## 15. Guvenlik, Gizlilik ve Yetkilendirme
 
@@ -354,7 +355,7 @@ MVP'de analytics yerel ve kullaniciya gorunur olmalıdır. Uzaktan telemetry var
 
 - Ilk asama: yerel dogfooding, tek kullanici.
 - Ikinci asama: GitHub uzerinden teknik kullanicilar icin kaynak kod ve kurulum denemesi.
-- Ucuncu asama: paketlenmis mobil/desktop build veya test kanali.
+- Ucuncu asama: paketlenmis mobil build veya test kanali; PC/desktop build yalnizca uyumluluk smoke/beta hedefi olarak ele alınır.
 
 ### Beta / Pilot
 
@@ -378,7 +379,7 @@ MVP'de analytics yerel ve kullaniciya gorunur olmalıdır. Uzaktan telemetry var
 | --- | --- | --- | --- |
 | MVP kapsamının buyumesi | Teslim gecikir | Yuksek | Self-host, SaaS, AI ajanlari ve multi-user Faz 2/3'e kilitlenir |
 | E2EE'nin erken karmasiklik yaratmasi | Mimari yavaslar | Yuksek | MVP'de yerel sifreli kasa ve net anahtar modeliyle baslanir |
-| Flutter desktop/web paket uyumu sorunlari | Platform kapsami daralir | Orta | Mobil oncelik, desktop/web teknik tasarimda dogrulama |
+| Flutter desktop/web paket uyumu sorunlari | Ileride PC uyumlulugu zorlasir | Orta | Mobil oncelik korunur, desktop/web derleme uyumu erken smoke test ile izlenir |
 | Yerel veride migration hatalari | Veri kaybi | Orta | Migration testleri, yedek ve geri alma planı |
 | AI gizlilik politikasiyla celisir | Guven kaybi | Orta | MVP'de harici AI yok, Faz 3 icin human-in-the-loop ve E2EE politikasi |
 | Custom tema sistemi karmasiklasir | UX dagilir | Orta | MVP'de temel tema, ileri tema Faz 2/3 |
@@ -397,6 +398,7 @@ MVP'de analytics yerel ve kullaniciya gorunur olmalıdır. Uzaktan telemetry var
 | --- | --- | --- |
 | UI dili | Turkce + Ingilizce | 2026-07-04 |
 | Mobil platform onceligi | Android + iOS es zamanli | 2026-07-04 |
+| PC/desktop uyumlulugu | Resmi MVP release degil; mimari ve tasarim uyumlulugu korunacak, erken desktop/web smoke test yapilacak | 2026-07-04 |
 | Stack | Flutter/Dart adayligi teknik tasarimda baglayici MVP karari olarak benimsendi; SQLCipher adapter spike'i uygulama oncesi risk azaltma gorevi | 2026-07-04 |
 | Sifre/kurtarma modeli | Parola + biyometrik + kurtarma anahtari | 2026-07-04 |
 | Yerel bildirimler | MVP'ye dahil; opt-in ve cihaz ici local notifications | 2026-07-04 |
@@ -404,6 +406,7 @@ MVP'de analytics yerel ve kullaniciya gorunur olmalıdır. Uzaktan telemetry var
 ## 22. Uygulama Oncesi Karar Listesi
 
 - SQLCipher adapter paket olgunlugunu Android+iOS spike ile dogrula.
+- Flutter desktop/web derleme uyumunu scaffold sonrasi smoke test ile dogrula; resmi PC release hedefi olarak ele alma.
 - E2EE icin anahtar turetme, saklama, recovery ve export politikasini uygulama oncesi teknik spike ile netlestir.
 - Local notification lock screen gizlilik varsayilanini sec.
 - GitHub repo icin `.gitignore`, lisans, README ve katkı notlarini planla.

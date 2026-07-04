@@ -19,6 +19,7 @@ Commit noktasi: planlama artifact'leri tek veya az sayida docs commit'iyle sakla
 - [ ] SET-02 `apps/free_task_flutter/` Flutter projesini olustur.
 - [ ] SET-03 `pubspec.yaml` dependency politikasini ve lockfile'i olustur.
 - [ ] SET-04 Format/analyze/test icin CI taslagi ekle.
+- [ ] SET-05 PC/desktop ve web smoke build kontrolu yap; resmi MVP release kapsamina alma.
 - [ ] DES-01 Claude Flutter theme tokenlarini app'e entegre et.
 - [ ] DES-02 TR/EN localization iskeletini kur.
 - [ ] UI-01 Alt bar, FAB ve routing app shell'ini kur.

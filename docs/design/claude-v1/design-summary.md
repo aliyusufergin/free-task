@@ -9,7 +9,7 @@
 ## 0. Repo bağlamı (kısa özet)
 
 - **Okunan dosyalar:** PRD (`prd.md`) ve tasarım brief'i (`claude-design-brief.md`). Repo'da mevcut uygulama kodu, UI kit, marka rehberi veya token dosyası yok — tasarım kararları sıfırdan bu iki dosyaya dayanılarak alınmıştır.
-- **MVP kapsamı:** Bireysel kullanıcı; mobil öncelikli, çok platformlu; yerel şifreli kasa (E2EE prensibi); offline çekirdek; görev CRUD + alt görev + zamanlama + tekrar + deadline + zamansız havuz; günlük liste + takvim + basit istatistik; JSON/Markdown export, free-task JSON import; basit yerel tarih/saat ayrıştırma; light/dark tema.
+- **MVP kapsamı:** Bireysel kullanıcı; mobil öncelikli Android+iOS; PC/desktop ve web için resmi MVP release değil, uyumluluk guard'ı; yerel şifreli kasa (E2EE prensibi); offline çekirdek; görev CRUD + alt görev + zamanlama + tekrar + deadline + zamansız havuz; günlük liste + takvim + basit istatistik; JSON/Markdown export, free-task JSON import; basit yerel tarih/saat ayrıştırma; light/dark tema.
 - **Faz 2 kapsamı:** self-host sync, SaaS alternatifi, cihazlar arası E2EE sync, multi-user + roller + aile/takım, gelişmiş import, gelişmiş istatistik paneli, ileri tema sistemi.
 - **Faz 3 kapsamı:** bulut + lokal AI, ses/görsel girdi, human-in-the-loop AI görev onayı, agent/plugin, REST/GraphQL + webhooks, görev ağacı/DAG, opsiyonel oyunlaştırma.
 - **Alınan ana tasarım kararları:**
@@ -340,6 +340,7 @@ Kart içi ayrım: `1px` `--border` (light `#F1EFEA` iç çizgi, dış `#E6E2DA`)
 - Tek kolon → **iki/üç kolon** (liste + detay + opsiyonel takvim), master-detail.
 - Bottom sheet → **sağ yan panel** veya orta modal.
 - Compact density masaüstünde varsayılan olabilir; token seti aynı kalır, yalnızca layout kırılımları eklenir. MVP kararları mobil önceliği korur.
+- Bu bölüm resmi MVP PC/desktop release taahhüdü değildir; scaffold sonrası desktop/web smoke build ile uyumluluk riski izlenir.
 
 ---
 
@@ -405,6 +406,7 @@ Kart içi ayrım: `1px` `--border` (light `#F1EFEA` iç çizgi, dış `#E6E2DA`)
 - Yerel bildirimler: MVP'de opt-in, cihaz içi local notifications.
 - Kurtarma/şifre modeli: parola + biyometrik + kurtarma anahtarı.
 - Platform önceliği: Android + iOS eş zamanlı.
+- PC/desktop uyumluluğu: resmi MVP release değil; mimari/tasarım uyumu korunur ve desktop/web smoke build sonucu notlanır.
 
 **Faz 2 & Faz 3 tam ekranları (yeni — artık not değil, tasarım)**
 - Faz 2 (`screens/14`–`23`) ve Faz 3 (`screens/24`–`34`) için tam görsel ekranlar üretildi; `$technical-design` ve `$ux-flow-planner` bunları doğrudan referans alabilir.
